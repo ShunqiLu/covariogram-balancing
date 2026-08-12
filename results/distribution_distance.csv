@@ -1,0 +1,5 @@
+family,dimension,scale,secret_l1_radius,source_count,shift_count,minimum_pairwise_acceptance_exact,minimum_pairwise_acceptance,common_core_acceptance_exact,common_core_acceptance,maximum_naive_output_tv_exact,maximum_naive_output_tv,common_target_output_tv_exact
+cube,2,8,2,289,13,15/17,0.8823529411764706,169/289,0.5847750865051903,2/15,0.13333333333333333,0/1
+cross_polytope,2,8,2,145,13,113/145,0.7793103448275862,17/29,0.5862068965517241,28/113,0.24778761061946902,0/1
+hybrid_full,2,8,2,229,13,195/229,0.851528384279476,145/229,0.6331877729257642,34/195,0.17435897435897435,0/1
+hexagon_blocks,2,8,2,217,13,183/217,0.8433179723502304,127/217,0.5852534562211982,34/183,0.18579234972677597,0/1

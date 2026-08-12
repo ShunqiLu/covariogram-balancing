@@ -1,0 +1,12 @@
+{
+  "cpu": "Intel(R) Core(TM) Ultra 9 275HX",
+  "logical_processors": "24",
+  "operating_system": "Windows-11-10.0.26200-SP0",
+  "physical_cores": "24",
+  "power_scheme": "Balanced (381b4222-f694-41f0-9685-ff5bb260df2e)",
+  "python_executable": "D:\\soft\\Anaconda\\python.exe",
+  "python_version": "3.13.5",
+  "ram_gib": "63.43",
+  "windows_build": "26200",
+  "wsl": false
+}

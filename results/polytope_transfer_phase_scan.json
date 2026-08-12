@@ -1,0 +1,660 @@
+{
+  "capped-cross-d2": {
+    "body_count": 21,
+    "pair_mode": "all",
+    "pair_count": 231,
+    "edge_evaluations": 3465,
+    "pair_signs": {
+      "nonnegative": 231,
+      "active-zero": 135
+    },
+    "increment_min": 0,
+    "increment_max": 11,
+    "negative_edge_count": 0,
+    "zero_edge_count": 985,
+    "minimal_negative": null,
+    "minimal_active_zero": {
+      "family": "capped-cross",
+      "left": "T=1,R=1",
+      "right": "T=3,R=3",
+      "dimension": 2,
+      "shell": 2,
+      "source": [
+        2,
+        0
+      ],
+      "target": [
+        1,
+        1
+      ],
+      "old": 5,
+      "new": 5,
+      "increment": 0
+    }
+  },
+  "B1-plus-Binf-d2": {
+    "body_count": 19,
+    "pair_mode": "all",
+    "pair_count": 190,
+    "edge_evaluations": 5838,
+    "pair_signs": {
+      "nonnegative": 190,
+      "active-zero": 122
+    },
+    "increment_min": 0,
+    "increment_max": 14,
+    "negative_edge_count": 0,
+    "zero_edge_count": 1377,
+    "minimal_negative": null,
+    "minimal_active_zero": {
+      "family": "B1-plus-Binf",
+      "left": "a=0,b=3",
+      "right": "a=1,b=0",
+      "dimension": 2,
+      "shell": 2,
+      "source": [
+        2,
+        0
+      ],
+      "target": [
+        1,
+        1
+      ],
+      "old": 5,
+      "new": 5,
+      "increment": 0
+    }
+  },
+  "lp-ball-d2": {
+    "body_count": 30,
+    "pair_mode": "all",
+    "pair_count": 465,
+    "edge_evaluations": 9663,
+    "pair_signs": {
+      "nonnegative": 465,
+      "active-zero": 381
+    },
+    "increment_min": 0,
+    "increment_max": 10,
+    "negative_edge_count": 0,
+    "zero_edge_count": 3234,
+    "minimal_negative": null,
+    "minimal_active_zero": {
+      "family": "lp-ball",
+      "left": "p=1,r=1",
+      "right": "p=1,r=3",
+      "dimension": 2,
+      "shell": 2,
+      "source": [
+        2,
+        0
+      ],
+      "target": [
+        1,
+        1
+      ],
+      "old": 5,
+      "new": 5,
+      "increment": 0
+    }
+  },
+  "capped-cross-d3": {
+    "body_count": 10,
+    "pair_mode": "all",
+    "pair_count": 55,
+    "edge_evaluations": 1259,
+    "pair_signs": {
+      "nonnegative": 55,
+      "active-zero": 28
+    },
+    "increment_min": 0,
+    "increment_max": 25,
+    "negative_edge_count": 0,
+    "zero_edge_count": 259,
+    "minimal_negative": null,
+    "minimal_active_zero": {
+      "family": "capped-cross",
+      "left": "T=1,R=1",
+      "right": "T=3,R=3",
+      "dimension": 3,
+      "shell": 2,
+      "source": [
+        2,
+        0,
+        0
+      ],
+      "target": [
+        1,
+        1,
+        0
+      ],
+      "old": 7,
+      "new": 7,
+      "increment": 0
+    }
+  },
+  "B1-plus-Binf-d3": {
+    "body_count": 15,
+    "pair_mode": "all",
+    "pair_count": 120,
+    "edge_evaluations": 32462,
+    "pair_signs": {
+      "nonnegative": 120,
+      "active-zero": 74
+    },
+    "increment_min": 0,
+    "increment_max": 132,
+    "negative_edge_count": 0,
+    "zero_edge_count": 15785,
+    "minimal_negative": null,
+    "minimal_active_zero": {
+      "family": "B1-plus-Binf",
+      "left": "a=0,b=3",
+      "right": "a=1,b=0",
+      "dimension": 3,
+      "shell": 2,
+      "source": [
+        2,
+        0,
+        0
+      ],
+      "target": [
+        1,
+        1,
+        0
+      ],
+      "old": 7,
+      "new": 7,
+      "increment": 0
+    }
+  },
+  "lp-ball-d3": {
+    "body_count": 18,
+    "pair_mode": "all",
+    "pair_count": 171,
+    "edge_evaluations": 9571,
+    "pair_signs": {
+      "nonnegative": 171,
+      "active-zero": 94
+    },
+    "increment_min": 0,
+    "increment_max": 42,
+    "negative_edge_count": 0,
+    "zero_edge_count": 5412,
+    "minimal_negative": null,
+    "minimal_active_zero": {
+      "family": "lp-ball",
+      "left": "p=1,r=1",
+      "right": "p=1,r=3",
+      "dimension": 3,
+      "shell": 2,
+      "source": [
+        2,
+        0,
+        0
+      ],
+      "target": [
+        1,
+        1,
+        0
+      ],
+      "old": 7,
+      "new": 7,
+      "increment": 0
+    }
+  },
+  "all-downsets-d2-M4": {
+    "body_count": 31,
+    "pair_mode": "all",
+    "pair_count": 496,
+    "edge_evaluations": 9278,
+    "pair_signs": {
+      "nonnegative": 266,
+      "negative": 230,
+      "active-zero": 421
+    },
+    "increment_min": -5,
+    "increment_max": 8,
+    "negative_edge_count": 491,
+    "zero_edge_count": 2269,
+    "minimal_negative": {
+      "family": "symmetric-downset",
+      "left": "ideal#0;max=[(0, 0)]",
+      "right": "ideal#3;max=[(2, 0)]",
+      "dimension": 2,
+      "shell": 2,
+      "source": [
+        2,
+        0
+      ],
+      "target": [
+        1,
+        1
+      ],
+      "old": 1,
+      "new": 0,
+      "increment": -1
+    },
+    "minimal_active_zero": {
+      "family": "symmetric-downset",
+      "left": "ideal#0;max=[(0, 0)]",
+      "right": "ideal#5;max=[(2, 1)]",
+      "dimension": 2,
+      "shell": 2,
+      "source": [
+        2,
+        0
+      ],
+      "target": [
+        1,
+        1
+      ],
+      "old": 1,
+      "new": 1,
+      "increment": 0
+    }
+  },
+  "equal-downsets-d2-M4": {
+    "body_count": 31,
+    "pair_mode": "equal",
+    "pair_count": 31,
+    "edge_evaluations": 627,
+    "pair_signs": {
+      "nonnegative": 19,
+      "negative": 12,
+      "active-zero": 16
+    },
+    "increment_min": -5,
+    "increment_max": 8,
+    "negative_edge_count": 34,
+    "zero_edge_count": 157,
+    "minimal_negative": {
+      "family": "symmetric-downset",
+      "left": "ideal#3;max=[(2, 0)]",
+      "right": "ideal#3;max=[(2, 0)]",
+      "dimension": 2,
+      "shell": 2,
+      "source": [
+        2,
+        0
+      ],
+      "target": [
+        1,
+        1
+      ],
+      "old": 3,
+      "new": 2,
+      "increment": -1
+    },
+    "minimal_active_zero": {
+      "family": "symmetric-downset",
+      "left": "ideal#3;max=[(2, 0)]",
+      "right": "ideal#3;max=[(2, 0)]",
+      "dimension": 2,
+      "shell": 3,
+      "source": [
+        3,
+        0
+      ],
+      "target": [
+        2,
+        1
+      ],
+      "old": 2,
+      "new": 2,
+      "increment": 0
+    }
+  },
+  "unequal-downsets-d2-M4": {
+    "body_count": 31,
+    "pair_mode": "unequal",
+    "pair_count": 465,
+    "edge_evaluations": 8651,
+    "pair_signs": {
+      "nonnegative": 247,
+      "negative": 218,
+      "active-zero": 405
+    },
+    "increment_min": -4,
+    "increment_max": 8,
+    "negative_edge_count": 457,
+    "zero_edge_count": 2112,
+    "minimal_negative": {
+      "family": "symmetric-downset",
+      "left": "ideal#0;max=[(0, 0)]",
+      "right": "ideal#3;max=[(2, 0)]",
+      "dimension": 2,
+      "shell": 2,
+      "source": [
+        2,
+        0
+      ],
+      "target": [
+        1,
+        1
+      ],
+      "old": 1,
+      "new": 0,
+      "increment": -1
+    },
+    "minimal_active_zero": {
+      "family": "symmetric-downset",
+      "left": "ideal#0;max=[(0, 0)]",
+      "right": "ideal#5;max=[(2, 1)]",
+      "dimension": 2,
+      "shell": 2,
+      "source": [
+        2,
+        0
+      ],
+      "target": [
+        1,
+        1
+      ],
+      "old": 1,
+      "new": 1,
+      "increment": 0
+    }
+  },
+  "diagonal-fiber-downsets-d2-M4": {
+    "body_count": 19,
+    "pair_mode": "all",
+    "pair_count": 190,
+    "edge_evaluations": 3840,
+    "pair_signs": {
+      "nonnegative": 190,
+      "active-zero": 139
+    },
+    "increment_min": 0,
+    "increment_max": 8,
+    "negative_edge_count": 0,
+    "zero_edge_count": 1075,
+    "minimal_negative": null,
+    "minimal_active_zero": {
+      "family": "symmetric-downset",
+      "left": "ideal#0;max=[(0, 0)]",
+      "right": "ideal#5;max=[(2, 1)]",
+      "dimension": 2,
+      "shell": 2,
+      "source": [
+        2,
+        0
+      ],
+      "target": [
+        1,
+        1
+      ],
+      "old": 1,
+      "new": 1,
+      "increment": 0
+    }
+  },
+  "lattice-convex-downsets-d2-M4": {
+    "body_count": 19,
+    "pair_mode": "all",
+    "pair_count": 190,
+    "edge_evaluations": 3840,
+    "pair_signs": {
+      "nonnegative": 190,
+      "active-zero": 139
+    },
+    "increment_min": 0,
+    "increment_max": 8,
+    "negative_edge_count": 0,
+    "zero_edge_count": 1075,
+    "minimal_negative": null,
+    "minimal_active_zero": {
+      "family": "symmetric-downset",
+      "left": "ideal#0;max=[(0, 0)]",
+      "right": "ideal#5;max=[(2, 1)]",
+      "dimension": 2,
+      "shell": 2,
+      "source": [
+        2,
+        0
+      ],
+      "target": [
+        1,
+        1
+      ],
+      "old": 1,
+      "new": 1,
+      "increment": 0
+    }
+  },
+  "all-downsets-d3-M2": {
+    "body_count": 15,
+    "pair_mode": "all",
+    "pair_count": 120,
+    "edge_evaluations": 3723,
+    "pair_signs": {
+      "nonnegative": 75,
+      "negative": 45,
+      "active-zero": 76
+    },
+    "increment_min": -4,
+    "increment_max": 20,
+    "negative_edge_count": 108,
+    "zero_edge_count": 1481,
+    "minimal_negative": {
+      "family": "symmetric-downset",
+      "left": "ideal#0;max=[(0, 0, 0)]",
+      "right": "ideal#4;max=[(2, 0, 0)]",
+      "dimension": 3,
+      "shell": 2,
+      "source": [
+        2,
+        0,
+        0
+      ],
+      "target": [
+        1,
+        1,
+        0
+      ],
+      "old": 1,
+      "new": 0,
+      "increment": -1
+    },
+    "minimal_active_zero": {
+      "family": "symmetric-downset",
+      "left": "ideal#0;max=[(0, 0, 0)]",
+      "right": "ideal#7;max=[(2, 1, 0)]",
+      "dimension": 3,
+      "shell": 2,
+      "source": [
+        2,
+        0,
+        0
+      ],
+      "target": [
+        1,
+        1,
+        0
+      ],
+      "old": 1,
+      "new": 1,
+      "increment": 0
+    }
+  },
+  "equal-downsets-d3-M2": {
+    "body_count": 15,
+    "pair_mode": "equal",
+    "pair_count": 15,
+    "edge_evaluations": 566,
+    "pair_signs": {
+      "nonnegative": 12,
+      "negative": 3,
+      "active-zero": 5
+    },
+    "increment_min": -3,
+    "increment_max": 20,
+    "negative_edge_count": 17,
+    "zero_edge_count": 260,
+    "minimal_negative": {
+      "family": "symmetric-downset",
+      "left": "ideal#4;max=[(2, 0, 0)]",
+      "right": "ideal#4;max=[(2, 0, 0)]",
+      "dimension": 3,
+      "shell": 2,
+      "source": [
+        2,
+        0,
+        0
+      ],
+      "target": [
+        1,
+        1,
+        0
+      ],
+      "old": 3,
+      "new": 2,
+      "increment": -1
+    },
+    "minimal_active_zero": {
+      "family": "symmetric-downset",
+      "left": "ideal#4;max=[(2, 0, 0)]",
+      "right": "ideal#4;max=[(2, 0, 0)]",
+      "dimension": 3,
+      "shell": 3,
+      "source": [
+        3,
+        0,
+        0
+      ],
+      "target": [
+        2,
+        1,
+        0
+      ],
+      "old": 2,
+      "new": 2,
+      "increment": 0
+    }
+  },
+  "unequal-downsets-d3-M2": {
+    "body_count": 15,
+    "pair_mode": "unequal",
+    "pair_count": 105,
+    "edge_evaluations": 3157,
+    "pair_signs": {
+      "nonnegative": 63,
+      "negative": 42,
+      "active-zero": 71
+    },
+    "increment_min": -4,
+    "increment_max": 18,
+    "negative_edge_count": 91,
+    "zero_edge_count": 1221,
+    "minimal_negative": {
+      "family": "symmetric-downset",
+      "left": "ideal#0;max=[(0, 0, 0)]",
+      "right": "ideal#4;max=[(2, 0, 0)]",
+      "dimension": 3,
+      "shell": 2,
+      "source": [
+        2,
+        0,
+        0
+      ],
+      "target": [
+        1,
+        1,
+        0
+      ],
+      "old": 1,
+      "new": 0,
+      "increment": -1
+    },
+    "minimal_active_zero": {
+      "family": "symmetric-downset",
+      "left": "ideal#0;max=[(0, 0, 0)]",
+      "right": "ideal#7;max=[(2, 1, 0)]",
+      "dimension": 3,
+      "shell": 2,
+      "source": [
+        2,
+        0,
+        0
+      ],
+      "target": [
+        1,
+        1,
+        0
+      ],
+      "old": 1,
+      "new": 1,
+      "increment": 0
+    }
+  },
+  "diagonal-fiber-downsets-d3-M2": {
+    "body_count": 11,
+    "pair_mode": "all",
+    "pair_count": 66,
+    "edge_evaluations": 2082,
+    "pair_signs": {
+      "nonnegative": 66,
+      "active-zero": 27
+    },
+    "increment_min": 0,
+    "increment_max": 20,
+    "negative_edge_count": 0,
+    "zero_edge_count": 909,
+    "minimal_negative": null,
+    "minimal_active_zero": {
+      "family": "symmetric-downset",
+      "left": "ideal#0;max=[(0, 0, 0)]",
+      "right": "ideal#9;max=[(2, 1, 1)]",
+      "dimension": 3,
+      "shell": 2,
+      "source": [
+        2,
+        0,
+        0
+      ],
+      "target": [
+        1,
+        1,
+        0
+      ],
+      "old": 1,
+      "new": 1,
+      "increment": 0
+    }
+  },
+  "diagonal-fiber-downsets-d3-M3": {
+    "body_count": 30,
+    "pair_mode": "all",
+    "pair_count": 465,
+    "edge_evaluations": 47236,
+    "pair_signs": {
+      "nonnegative": 465,
+      "active-zero": 336
+    },
+    "increment_min": 0,
+    "increment_max": 42,
+    "negative_edge_count": 0,
+    "zero_edge_count": 21284,
+    "minimal_negative": null,
+    "minimal_active_zero": {
+      "family": "symmetric-downset",
+      "left": "ideal#0;max=[(0, 0, 0)]",
+      "right": "ideal#9;max=[(2, 1, 1)]",
+      "dimension": 3,
+      "shell": 2,
+      "source": [
+        2,
+        0,
+        0
+      ],
+      "target": [
+        1,
+        1,
+        0
+      ],
+      "old": 1,
+      "new": 1,
+      "increment": 0
+    }
+  }
+}

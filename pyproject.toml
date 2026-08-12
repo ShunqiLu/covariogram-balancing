@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ehrhart-fswa"
+version = "0.1.0"
+description = "Exact balancing calculus and sharp stability for symmetric lattice cross-covariograms"
+requires-python = ">=3.11"
+
+[project.scripts]
+ehrhart-fswa-baseline = "ehrhart_fswa.experiment:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-ra"

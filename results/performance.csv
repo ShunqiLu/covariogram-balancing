@@ -1,0 +1,5 @@
+operation,parameters,exact_result_digest,wall_seconds,python_peak_mib,arithmetic_complexity,notes
+cross-overlap bivariate DP,"d=4,t=40,u=(6,0,0,0)","digits=7,mod2^64=1321641",0.013210800010710955,0.057281494140625,O(d t^3) naive sparse-truncated arithmetic; O(t^2) states,exact Python integers; signed-permutation canonical cache
+truncated-l1 count,"d=32,B=608,L=floor(608*sqrt(32))","digits=88,mod2^64=2794106642062884865",0.2907980000018142,0.6867904663085938,O(d L) arithmetic and O(L) coefficient storage,sliding-window univariate DP
+generic rational H-enumeration,"rational octagon,d=2,t=80,u=(1,0)","digits=5,mod2^64=22480",1.5665728999883868,0.08643341064453125,O((2t+1)^d * number_of_facets),independent low-dimensional reference enumerator
+rank/unrank round trips,"64 deterministic ranks,d=16,B=16,L=64","digits=21,mod2^64=17419879899224605695",0.29702440003165975,0.07086944580078125,O(samples*d*B) completion-count queries after DP caching,reference implementation; no constant-time claim

@@ -1,0 +1,51 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{amsmath,amssymb}
+\usetikzlibrary{arrows.meta}
+\definecolor{supportblue}{RGB}{184,207,220}
+\definecolor{warmorange}{RGB}{224,151,91}
+\begin{document}
+\begin{tikzpicture}[
+  font=\small,>=Latex,
+  state/.style={draw=black!72,very thick,fill=black!3,align=center,
+                text width=4.55cm,minimum height=.62cm,inner sep=3pt},
+  certificate/.style={draw=black!72,very thick,fill=supportblue!38,
+                      align=center,text width=4.55cm,minimum height=.62cm,
+                      inner sep=3pt},
+  error/.style={draw=warmorange!85!black,very thick,fill=warmorange!20,
+                align=center,text width=4.55cm,minimum height=.62cm,
+                inner sep=3pt},
+  flow/.style={very thick,->},
+]
+  \node[font=\bfseries] at (0.25,3.15) {(a)};
+  \node[state] (history) at (2.65,2.30) {current complete history $h$};
+  \node[certificate] (coupling) at (2.65,1.15)
+    {coupled kernels $K_{\theta,h}$ and $K_h^0$};
+  \node[error] (trial) at (2.65,0) {round-$i$ error $e_i$};
+  \node[state] (branch) at (2.65,-1.15)
+    {ideal branch: sublaw $aQ$; rejection mass $1-a$ updates $h'$};
+  \node[certificate] (classical) at (2.65,-2.30)
+    {$\mathsf{TV}\le\min\!\left\{1,\sum_{i\ge1}(1-a)^{i-1}e_i\right\}$};
+  \draw[flow] (history)--(coupling);
+  \draw[flow] (coupling)--(trial);
+  \draw[flow] (trial)--(branch);
+  \draw[flow] (branch)--(classical);
+
+  \draw[very thick,dashed,black!55] (6.15,3.28)--(6.15,-2.72);
+  \node[font=\bfseries] at (7.25,3.15) {(b)};
+  \node[state] (rank) at (9.65,2.30) {public rank defect $\delta(A)$};
+  \node[certificate] (entropy) at (9.65,1.15)
+    {commitment min-entropy $h$};
+  \node[error,font=\footnotesize] (quantum) at (9.65,0)
+    {$\varepsilon_i^{\rm Q}=\min\!\left\{1,
+      \sqrt{q_i2^{-h}}+\frac12q_i2^{-h}\right\}$};
+  \node[certificate,font=\footnotesize] (restart) at (9.65,-1.15)
+    {$\text{restart distance}\le
+      \min\!\left\{1,\sum_{i\ge1}(1-a)^{i-1}\varepsilon_i^{\rm Q}\right\}$};
+  \node[state] (scope) at (9.65,-2.30)
+    {independent mask source required};
+  \draw[flow] (rank)--(entropy);
+  \draw[flow] (entropy)--(quantum);
+  \draw[flow] (quantum)--(restart);
+  \draw[flow] (restart)--(scope);
+\end{tikzpicture}
+\end{document}

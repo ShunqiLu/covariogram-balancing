@@ -1,0 +1,34 @@
+{
+  "kernel_dmax": 4,
+  "kernel_bmax": 2,
+  "kernel_failures": 0,
+  "edge_dmax": 7,
+  "edge_bmax": 4,
+  "edge_failures": 0,
+  "endpoint_failures": 0,
+  "theorem_dmax": 39,
+  "theorem_bmax": 6,
+  "theorem_failures": 0,
+  "threshold_ties": [
+    [
+      13,
+      2,
+      5
+    ],
+    [
+      24,
+      3,
+      7
+    ],
+    [
+      31,
+      3,
+      5
+    ],
+    [
+      39,
+      4,
+      9
+    ]
+  ]
+}
