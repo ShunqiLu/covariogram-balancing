@@ -87,3 +87,7 @@ verifies the newly generated hashes. The single timing experiment fixes seed
 20260802; every theorem and table value is deterministic, so only
 machine-dependent timing columns vary between runs. Exact environment metadata
 are recorded in `results/performance_environment.json`.
+
+## License
+
+MIT, see `LICENSE`.
