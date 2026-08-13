@@ -88,7 +88,7 @@ def _body_shape(ax, cx, cy, rx, ry, kind, fc, ec):
 
 
 def fig_architecture(path="fig-architecture.pdf"):
-    height = 2.72
+    height = 2.85
     ar = TW / height           # data units per unit of visual aspect
     fig, ax = plt.subplots(figsize=(TW, height))
     blank_axes(ax, (0, 100), (0, 100))
@@ -119,6 +119,10 @@ def fig_architecture(path="fig-architecture.pdf"):
     fiber = [(-1, 2), (0, 1), (1, 0), (2, -1)]
     ax.plot([cx + u * i for i, j in fiber], [cy + u * ar * j for i, j in fiber],
             "o", ms=3.0, color=ORANGE, zorder=5)
+    ax.text(cx + 8.6, 91.3, r"$x_i+x_j=r$", fontsize=6.5, color=ORANGE,
+            ha="center", va="center")
+    ax.text(cx - 8.6, 74.7, r"$w=x_i-x_j$", fontsize=6.5, color=GRAY,
+            ha="center", va="center")
 
     # (b) the atomic exposure of one transfer
     cx, cy, u = cells[1], 83.0, 2.15
@@ -139,17 +143,31 @@ def fig_architecture(path="fig-architecture.pdf"):
     ax.text(cx + 4.1 * u, cy + 1.15 * u * ar, r"$\varepsilon=1$", fontsize=7,
             color=ORANGE, ha="center", va="bottom")
 
-    # (c) the order it generates on a shell
-    cx, cy, u = cells[2], 83.0, 6.6
-    nodes = {"t": (0, 1.55), "l": (-1, 0), "r": (1, 0), "b": (0, -1.55)}
-    place = {k: (cx + u * x, cy + 0.52 * u * ar * y)
-             for k, (x, y) in nodes.items()}
-    for a, b in (("t", "l"), ("t", "r"), ("l", "b"), ("r", "b")):
-        arrow(ax, place[a], place[b], color=LIGHT, lw=0.7, ms=4)
-    ax.plot(*place["t"], "o", ms=4.2, color=ORANGE, zorder=5)
-    ax.plot(*place["b"], "o", ms=4.2, color=BLUE, zorder=5)
-    for k in ("l", "r"):
-        ax.plot(*place[k], "o", ms=3.4, color=GRAY, zorder=5)
+    # (c) the order it generates on one shell: the majorization Hasse
+    # diagram of the partitions of s=6 into at most d=3 parts
+    cx, cy = cells[2], 84.0
+    place = {
+        "600": (cx - 11.6, cy), "510": (cx - 6.9, cy),
+        "420": (cx - 2.2, cy), "330": (cx + 2.5, cy + 5.6),
+        "411": (cx + 2.5, cy - 5.6), "321": (cx + 7.2, cy),
+        "222": (cx + 11.9, cy),
+    }
+    covers = (("600", "510"), ("510", "420"), ("420", "330"), ("420", "411"),
+              ("330", "321"), ("411", "321"), ("321", "222"))
+    for a, b in covers:
+        (x0, y0), (x1, y1) = place[a], place[b]
+        dx, dy = x1 - x0, (y1 - y0) / ar
+        norm = (dx * dx + dy * dy) ** 0.5
+        gap = 1.7 / norm
+        arrow(ax, (x0 + gap * dx, y0 + gap * dy * ar),
+              (x1 - gap * dx, y1 - gap * dy * ar),
+              color=LIGHT, lw=0.7, ms=4)
+    for key, (x, y) in place.items():
+        colour = {"600": ORANGE, "222": BLUE}.get(key, GRAY)
+        ax.plot([x], [y], "o", ms=4.0 if colour is not GRAY else 3.2,
+                color=colour, zorder=5)
+    ax.text(cx, 73.2, r"$g$ nondecreasing", fontsize=6.5, color=GRAY,
+            ha="center", va="center")
 
     labels = ("centered exchange fiber",
               r"atomic exposure $\varepsilon\in\{0,1\}$",
@@ -157,27 +175,29 @@ def fig_architecture(path="fig-architecture.pdf"):
     for cx, text in zip(cells, labels):
         ax.text(cx, 66.5, text, fontsize=7.5, ha="center", va="center")
 
-    arrow(ax, (50, 61.5), (50, 51), lw=0.9, ms=6)
+    arrow(ax, (50, 61.5), (50, 52.5), lw=0.9, ms=6)
 
     bodies = (
         (cells[0], 8.8, "diamond", F_ORANGE, ORANGE, "Lee balls",
-         r"$\lfloor s/2\rfloor-1$ minimizing arcs"),
+         "interior shells:", r"$\lfloor s/2\rfloor-1$ minimizing arcs"),
         (cells[1], 8.4, "octagon", F_PURPLE, "#6a5a8c",
-         r"$C_d+bB_\infty^d$",
-         r"sharp $\kappa_b^{(d)}(s)$, threshold $\Theta_{d,b}(s)$"),
+         r"$C_d+bB_\infty^d$", r"sharp $\kappa_b^{(d)}(s)$,",
+         r"threshold $\Theta_{d,b}(s)$"),
         (cells[2], 7.7, "square", F_GREEN, "#4a7a44", "cubes",
-         "one minimizing arc"),
+         "every active shell:", "one minimizing arc"),
     )
-    for cx, r, kind, fc, ec, head, tail in bodies:
-        _body_shape(ax, cx, 34, r, r * ar, kind, fc, ec)
-        ax.text(cx, 11.5, head, fontsize=8, ha="center", va="center")
-        ax.text(cx, 4, tail, fontsize=7, ha="center", va="center",
+    for cx, r, kind, fc, ec, head, first, second in bodies:
+        _body_shape(ax, cx, 35, r, r * ar, kind, fc, ec)
+        ax.text(cx, 13, head, fontsize=8, ha="center", va="center")
+        ax.text(cx, 6.4, first, fontsize=7, ha="center", va="center",
                 color=GRAY)
-    arrow(ax, (40, 34), (27, 34), color=GRAY, lw=0.8, ms=5)
-    arrow(ax, (60, 34), (73, 34), color=GRAY, lw=0.8, ms=5)
-    ax.text(33.5, 38, r"$b=0$", fontsize=7, color=GRAY, ha="center",
+        ax.text(cx, 1.4, second, fontsize=7, ha="center", va="center",
+                color=GRAY)
+    arrow(ax, (40, 35), (27, 35), color=GRAY, lw=0.8, ms=5)
+    arrow(ax, (60, 35), (73, 35), color=GRAY, lw=0.8, ms=5)
+    ax.text(33.5, 39, r"$b=0$", fontsize=7, color=GRAY, ha="center",
             va="bottom")
-    ax.text(66.5, 38, r"$b\to\infty$", fontsize=7, color=GRAY, ha="center",
+    ax.text(66.5, 39, r"$b\to\infty$", fontsize=7, color=GRAY, ha="center",
             va="bottom")
 
     ax.text(2.5, 98.5, "universal mechanism", fontsize=7, color=GRAY,
