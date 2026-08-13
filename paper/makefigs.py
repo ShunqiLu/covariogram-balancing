@@ -93,15 +93,13 @@ def fig_architecture(path="fig-architecture.pdf"):
     fig, ax = plt.subplots(figsize=(TW, height))
     blank_axes(ax, (0, 100), (0, 100))
 
-    cells, widths = (15.5, 45.5, 80.0), (25.0, 25.0, 34.0)
-    for cx, w in zip(cells, widths):
-        ax.add_patch(FancyBboxPatch(
-            (cx - w / 2, 63), w, 32,
-            boxstyle="round,pad=0.0,rounding_size=1.6",
-            linewidth=0.6, edgecolor="#e0e4ea", facecolor="#f8f9fb",
-            zorder=1))
-    for x0 in (28.7, 58.7):
-        arrow(ax, (x0, 82), (x0 + 3.6, 82), color=GRAY, lw=0.7, ms=4)
+    cells = (17.0, 50.0, 83.0)
+    ax.add_patch(FancyBboxPatch(
+        (3, 63), 94, 32,
+        boxstyle="round,pad=0.0,rounding_size=1.6",
+        linewidth=0.6, edgecolor="#e0e4ea", facecolor="#f8f9fb", zorder=1))
+    for x0 in (31.8, 64.0):
+        arrow(ax, (x0, 83), (x0 + 3.6, 83), color=GRAY, lw=0.7, ms=4)
 
     # (a) a centered exchange fiber
     cx, cy, u = cells[0], 83.0, 1.80
@@ -147,10 +145,10 @@ def fig_architecture(path="fig-architecture.pdf"):
     # diagram of the partitions of s=6 into at most d=3 parts
     cx, cy = cells[2], 83.5
     place = {
-        "600": (cx - 12.0, cy), "510": (cx - 7.2, cy),
-        "420": (cx - 2.4, cy), "330": (cx + 2.4, cy + 5.0),
-        "411": (cx + 2.4, cy - 5.0), "321": (cx + 7.2, cy),
-        "222": (cx + 12.0, cy),
+        "600": (cx - 10.6, cy), "510": (cx - 6.4, cy),
+        "420": (cx - 2.2, cy), "330": (cx + 2.2, cy + 5.0),
+        "411": (cx + 2.2, cy - 5.0), "321": (cx + 6.4, cy),
+        "222": (cx + 10.6, cy),
     }
     tags = {"600": 1, "510": -1, "420": 1, "330": 1, "411": -1,
             "321": -1, "222": 1}
@@ -170,9 +168,10 @@ def fig_architecture(path="fig-architecture.pdf"):
                 color=colour, zorder=5)
         ax.text(x + {"420": -1.4, "321": 1.4}.get(key, 0.0),
                 y + 3.7 * tags[key],
-                "$({},{},{})$".format(*key), fontsize=6, color=colour,
+                "$({0}{{,}}{1}{{,}}{2})$".format(*key), fontsize=6,
+                color=colour,
                 ha="center", va="center")
-    ax.text(cx - 10.0, 71.8, r"$g$ nondecreasing", fontsize=6, color=GRAY,
+    ax.text(cx - 8.6, 71.8, r"$g$ nondecreasing", fontsize=6, color=GRAY,
             ha="center", va="center")
 
     labels = ("centered exchange fiber",
@@ -181,9 +180,7 @@ def fig_architecture(path="fig-architecture.pdf"):
     for cx, text in zip(cells, labels):
         ax.text(cx, 66.5, text, fontsize=7.5, ha="center", va="center")
 
-    ax.plot([80, 80, 50], [62.3, 57.5, 57.5], "-", color=GRAY, lw=0.8,
-            solid_joinstyle="round", zorder=2)
-    arrow(ax, (50, 57.5), (50, 52.3), color=GRAY, lw=0.8, ms=5)
+    arrow(ax, (50, 62.2), (50, 52.6), color=GRAY, lw=0.9, ms=6)
 
     bases = (17.0, 50.0, 83.0)
     bodies = (
