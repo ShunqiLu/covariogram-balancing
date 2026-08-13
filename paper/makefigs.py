@@ -216,11 +216,11 @@ def fig_architecture(path="fig-architecture.pdf"):
 
 # ----------------------------------------------------------------- fig 2
 def fig_exchange_fiber(path="fig-exchange-fiber.pdf"):
-    fig, axes = plt.subplots(1, 2, figsize=(1.15 * TW, 2.24),
-                             gridspec_kw=dict(width_ratios=[1.0, 1.15],
-                                              wspace=0.30))
+    fig, axes = plt.subplots(1, 2, figsize=(1.10 * TW, 2.30),
+                             gridspec_kw=dict(width_ratios=[1.0, 1.22],
+                                              wspace=0.22))
     ax = axes[0]
-    blank_axes(ax, (-3.2, 3.2), (-3.2, 3.2), equal=True)
+    blank_axes(ax, (-3.6, 3.6), (-3.6, 3.6), equal=True)
     verts = [(2, 1), (1, 2), (-1, 2), (-2, 1), (-2, -1), (-1, -2),
              (1, -2), (2, -1)]
     ax.add_patch(plt.Polygon(verts, closed=True, facecolor=F_BLUE,
@@ -229,36 +229,52 @@ def fig_exchange_fiber(path="fig-exchange-fiber.pdf"):
            if abs(x) + abs(y) <= 3 and max(abs(x), abs(y)) <= 2]
     on = [(x, y) for (x, y) in pts if x + y == 1]
     off = [p for p in pts if p not in on]
-    ax.plot([p[0] for p in off], [p[1] for p in off], "o", ms=1.8,
+    ax.plot([p[0] for p in off], [p[1] for p in off], "o", ms=1.9,
             color=GRAY, zorder=3)
-    ax.plot([-1.75, 2.75], [2.75, -1.75], "-", color=ORANGE, lw=0.9,
-            zorder=2)
+    ax.plot([-1.4, 2.4], [2.4, -1.4], "-", color=ORANGE, lw=0.9, zorder=2)
     ax.plot([p[0] for p in on], [p[1] for p in on], "o", ms=3.6,
             color=ORANGE, zorder=4)
-    ax.text(3.15, -2.75, r"$x_i+x_j=r$", fontsize=7, color=ORANGE,
-            ha="right", va="center")
-    ax.text(-3.05, 2.7, r"$K\cap\mathbb Z^d$", fontsize=7.5, color=BLUE)
-    ax.set_title(r"(a) a fixed coordinate-sum line", fontsize=8, pad=3)
+
+    ax.plot([2.45, 1.62], [2.25, 1.55], "-", color=BLUE, lw=0.5, zorder=2)
+    ax.text(2.62, 2.42, r"$K$", fontsize=8, color=BLUE, ha="left",
+            va="bottom")
+    ax.plot([-2.25, -1.15], [-2.72, -2.05], "-", color=GRAY, lw=0.5,
+            zorder=2)
+    ax.text(-2.45, -3.0, r"$K\cap\mathbb Z^d$", fontsize=7, color=GRAY,
+            ha="center", va="center")
+    ax.text(2.3, -3.0, r"$x_i+x_j=r$", fontsize=7, color=ORANGE,
+            ha="center", va="center")
+    ax.set_title(r"(a) a fixed coordinate-sum line", fontsize=8, pad=4)
 
     ax = axes[1]
-    blank_axes(ax, (-4.7, 4.7), (-1.25, 1.05))
-    ax.plot([-4.4, 4.4], [0, 0], "-", color="black", lw=0.7)
+    blank_axes(ax, (-5.4, 5.4), (-2.05, 2.05))
+    ax.add_patch(Rectangle((-3, -0.26), 6, 0.52, facecolor=F_BLUE,
+                           edgecolor="none", zorder=1))
+    ax.plot([-4.7, 4.6], [0, 0], "-", color="black", lw=0.7, zorder=2)
+    arrow(ax, (4.6, 0), (5.05, 0), lw=0.7, ms=5)
     for k in range(-4, 5):
-        ax.plot([k, k], [-0.08, 0.08], "-", color=LIGHT, lw=0.6)
-        ax.text(k, -0.26, f"${k}$", fontsize=6.5, ha="center", va="top",
+        ax.plot([k, k], [-0.13, 0.13], "-", color=LIGHT, lw=0.6, zorder=2)
+        ax.text(k, -0.42, f"${k}$", fontsize=6.5, ha="center", va="top",
                 color=GRAY)
+    ax.plot([0, 0], [-0.6, 0.6], ":", color=GRAY, lw=0.6, zorder=2)
     ax.plot([-3, -1, 1, 3], [0, 0, 0, 0], "o", ms=4.4, color=ORANGE,
-            zorder=3)
-    ax.annotate("", xy=(3, 0.42), xytext=(0, 0.42),
-                arrowprops=dict(arrowstyle="-|>", color=BLUE, lw=0.7,
-                                mutation_scale=6))
-    ax.plot([0, 0], [0.14, 0.42], "-", color=BLUE, lw=0.7)
-    ax.text(1.5, 0.56, r"$m=3$", fontsize=7, ha="center", color=BLUE)
-    ax.plot([0, 0], [-0.14, 0.14], "-", color=BLUE, lw=0.9)
-    ax.text(0, -0.68, r"$\delta=x_i-x_j$, spacing $2$",
-            fontsize=7, ha="center", va="top")
+            zorder=4)
+
+    for x in (0, 3):
+        ax.plot([x, x], [0.30, 1.12], "-", color=LIGHT, lw=0.5, zorder=2)
+    arrow(ax, (0, 0.95), (3, 0.95), color=BLUE, lw=0.7, style="<|-|>", ms=5)
+    ax.text(1.5, 1.20, r"$m=3$", fontsize=7, color=BLUE, ha="center",
+            va="bottom")
+    for x in (-3, -1):
+        ax.plot([x, x], [-0.30, -1.12], "-", color=LIGHT, lw=0.5, zorder=2)
+    arrow(ax, (-3, -0.95), (-1, -0.95), color=GRAY, lw=0.7, style="<|-|>",
+          ms=5)
+    ax.text(-2, -1.22, r"spacing $2$", fontsize=7, color=GRAY, ha="center",
+            va="top")
+    ax.text(4.9, -1.22, r"$\delta=x_i-x_j$", fontsize=7, ha="right",
+            va="top")
     ax.set_title(r"(b) its fiber: a centered parity interval",
-                 fontsize=8, pad=3)
+                 fontsize=8, pad=4)
     save(fig, path)
 
 
