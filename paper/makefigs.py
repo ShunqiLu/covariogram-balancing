@@ -93,15 +93,15 @@ def fig_architecture(path="fig-architecture.pdf"):
     fig, ax = plt.subplots(figsize=(TW, height))
     blank_axes(ax, (0, 100), (0, 100))
 
-    cells = (17.0, 50.0, 83.0)
-    for cx in cells:
+    cells, widths = (15.5, 45.5, 80.0), (25.0, 25.0, 34.0)
+    for cx, w in zip(cells, widths):
         ax.add_patch(FancyBboxPatch(
-            (cx - 14.5, 63), 29, 32,
+            (cx - w / 2, 63), w, 32,
             boxstyle="round,pad=0.0,rounding_size=1.6",
             linewidth=0.6, edgecolor="#e0e4ea", facecolor="#f8f9fb",
             zorder=1))
-    for x0 in (31.5, 64.5):
-        arrow(ax, (x0, 82), (x0 + 4, 82), color=GRAY, lw=0.7, ms=4)
+    for x0 in (28.7, 58.7):
+        arrow(ax, (x0, 82), (x0 + 3.6, 82), color=GRAY, lw=0.7, ms=4)
 
     # (a) a centered exchange fiber
     cx, cy, u = cells[0], 83.0, 1.80
@@ -119,13 +119,13 @@ def fig_architecture(path="fig-architecture.pdf"):
     fiber = [(-1, 2), (0, 1), (1, 0), (2, -1)]
     ax.plot([cx + u * i for i, j in fiber], [cy + u * ar * j for i, j in fiber],
             "o", ms=3.0, color=ORANGE, zorder=5)
-    ax.text(cx + 8.6, 91.3, r"$x_i+x_j=r$", fontsize=6.5, color=ORANGE,
+    ax.text(cx + 7.6, 91.3, r"$x_i+x_j=r$", fontsize=6.5, color=ORANGE,
             ha="center", va="center")
-    ax.text(cx - 8.6, 74.7, r"$w=x_i-x_j$", fontsize=6.5, color=GRAY,
+    ax.text(cx - 7.6, 74.7, r"$w=x_i-x_j$", fontsize=6.5, color=GRAY,
             ha="center", va="center")
 
     # (b) the atomic exposure of one transfer
-    cx, cy, u = cells[1], 83.0, 2.15
+    cx, cy, u = cells[1], 83.0, 1.90
     ax.add_patch(Rectangle((cx - 3.6 * u, cy - 0.55 * u * ar), 7.2 * u,
                            1.1 * u * ar, facecolor=F_BLUE, edgecolor="none",
                            zorder=2))
@@ -145,13 +145,15 @@ def fig_architecture(path="fig-architecture.pdf"):
 
     # (c) the order it generates on one shell: the majorization Hasse
     # diagram of the partitions of s=6 into at most d=3 parts
-    cx, cy = cells[2], 84.0
+    cx, cy = cells[2], 83.5
     place = {
-        "600": (cx - 11.6, cy), "510": (cx - 6.9, cy),
-        "420": (cx - 2.2, cy), "330": (cx + 2.5, cy + 5.6),
-        "411": (cx + 2.5, cy - 5.6), "321": (cx + 7.2, cy),
-        "222": (cx + 11.9, cy),
+        "600": (cx - 12.0, cy), "510": (cx - 7.2, cy),
+        "420": (cx - 2.4, cy), "330": (cx + 2.4, cy + 5.0),
+        "411": (cx + 2.4, cy - 5.0), "321": (cx + 7.2, cy),
+        "222": (cx + 12.0, cy),
     }
+    tags = {"600": 1, "510": -1, "420": 1, "330": 1, "411": -1,
+            "321": -1, "222": 1}
     covers = (("600", "510"), ("510", "420"), ("420", "330"), ("420", "411"),
               ("330", "321"), ("411", "321"), ("321", "222"))
     for a, b in covers:
@@ -164,9 +166,13 @@ def fig_architecture(path="fig-architecture.pdf"):
               color=LIGHT, lw=0.7, ms=4)
     for key, (x, y) in place.items():
         colour = {"600": ORANGE, "222": BLUE}.get(key, GRAY)
-        ax.plot([x], [y], "o", ms=4.0 if colour is not GRAY else 3.2,
+        ax.plot([x], [y], "o", ms=3.8 if colour is not GRAY else 3.0,
                 color=colour, zorder=5)
-    ax.text(cx, 73.2, r"$g$ nondecreasing", fontsize=6.5, color=GRAY,
+        ax.text(x + {"420": -1.4, "321": 1.4}.get(key, 0.0),
+                y + 3.7 * tags[key],
+                "$({},{},{})$".format(*key), fontsize=6, color=colour,
+                ha="center", va="center")
+    ax.text(cx - 10.0, 71.8, r"$g$ nondecreasing", fontsize=6, color=GRAY,
             ha="center", va="center")
 
     labels = ("centered exchange fiber",
@@ -175,16 +181,20 @@ def fig_architecture(path="fig-architecture.pdf"):
     for cx, text in zip(cells, labels):
         ax.text(cx, 66.5, text, fontsize=7.5, ha="center", va="center")
 
-    arrow(ax, (50, 61.5), (50, 52.5), lw=0.9, ms=6)
+    ax.plot([80, 80, 50], [62.3, 57.5, 57.5], "-", color=GRAY, lw=0.8,
+            solid_joinstyle="round", zorder=2)
+    arrow(ax, (50, 57.5), (50, 52.3), color=GRAY, lw=0.8, ms=5)
 
+    bases = (17.0, 50.0, 83.0)
     bodies = (
-        (cells[0], 8.8, "diamond", F_ORANGE, ORANGE, "Lee balls",
-         "interior shells:", r"$\lfloor s/2\rfloor-1$ minimizing arcs"),
-        (cells[1], 8.4, "octagon", F_PURPLE, "#6a5a8c",
-         r"$C_d+bB_\infty^d$", r"sharp $\kappa_b^{(d)}(s)$,",
-         r"threshold $\Theta_{d,b}(s)$"),
-        (cells[2], 7.7, "square", F_GREEN, "#4a7a44", "cubes",
-         "every active shell:", "one minimizing arc"),
+        (bases[0], 8.8, "diamond", F_ORANGE, ORANGE, "Lee balls",
+         r"$d\ge3$, $4\le s\le2t-2$:",
+         r"$\lfloor s/2\rfloor-1$ minimizing arcs"),
+        (bases[1], 8.4, "octagon", F_PURPLE, "#6a5a8c",
+         r"$C_d+bB_\infty^d$", r"$d\ge3$, $b\ge2$, $4\le s\le N$:",
+         r"sharp $\kappa_b^{(d)}(s)$ and $\Theta_{d,b}(s)$"),
+        (bases[2], 7.7, "square", F_GREEN, "#4a7a44", "cubes",
+         r"$d\ge3$, every active shell:", "one minimizing arc"),
     )
     for cx, r, kind, fc, ec, head, first, second in bodies:
         _body_shape(ax, cx, 35, r, r * ar, kind, fc, ec)
