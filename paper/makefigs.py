@@ -73,38 +73,117 @@ def save(fig, path, full=False):
 
 
 # ----------------------------------------------------------------- fig 1
+def _body_shape(ax, cx, cy, rx, ry, kind, fc, ec):
+    if kind == "diamond":
+        verts = [(rx, 0), (0, ry), (-rx, 0), (0, -ry)]
+    elif kind == "octagon":
+        a = 0.62
+        verts = [(rx, a * ry), (a * rx, ry), (-a * rx, ry), (-rx, a * ry),
+                 (-rx, -a * ry), (-a * rx, -ry), (a * rx, -ry), (rx, -a * ry)]
+    else:
+        verts = [(rx, ry), (-rx, ry), (-rx, -ry), (rx, -ry)]
+    ax.add_patch(plt.Polygon([(cx + x, cy + y) for x, y in verts],
+                             closed=True, facecolor=fc, edgecolor=ec,
+                             linewidth=0.9, zorder=3))
+
+
 def fig_architecture(path="fig-architecture.pdf"):
-    fig, ax = plt.subplots(figsize=(TW, 2.45))
-    blank_axes(ax, (-7, 103), (0, 100))
+    height = 2.72
+    ar = TW / height           # data units per unit of visual aspect
+    fig, ax = plt.subplots(figsize=(TW, height))
+    blank_axes(ax, (0, 100), (0, 100))
 
-    box(ax, 52, 93, 58, 11, r"centered exchange fibers", fc=F_GRAY)
-    box(ax, 52, 73, 74, 11,
-        r"atomic exposure $\varepsilon\in\{0,1\}$ and transfer identity",
-        fc=F_BLUE)
-    box(ax, 52, 53, 82, 11,
-        r"fixed-shell Schur order and fiberwise equality certificate",
-        fc=F_BLUE)
+    cells = (17.0, 50.0, 83.0)
+    for cx in cells:
+        ax.add_patch(FancyBboxPatch(
+            (cx - 14.5, 63), 29, 32,
+            boxstyle="round,pad=0.0,rounding_size=1.6",
+            linewidth=0.6, edgecolor="#e0e4ea", facecolor="#f8f9fb",
+            zorder=1))
+    for x0 in (31.5, 64.5):
+        arrow(ax, (x0, 82), (x0 + 4, 82), color=GRAY, lw=0.7, ms=4)
 
-    box(ax, 26, 30, 50, 14,
-        "Lee balls: closed $\\kappa_{d,t,s}$,\nminimizing arcs, rigidity",
-        fc=F_ORANGE)
-    box(ax, 78, 30, 46, 14,
-        "cubes: product kernel,\nunique arc", fc=F_GREEN)
-    box(ax, 52, 7, 84, 11,
-        r"$C_d+bB_\infty^d$: sharp constant and threshold $\Theta_{d,b}(s)$",
-        fc=F_PURPLE)
+    # (a) a centered exchange fiber
+    cx, cy, u = cells[0], 83.0, 1.80
+    ax.add_patch(plt.Polygon(
+        [(cx + 3 * u, cy), (cx, cy + 3 * u * ar), (cx - 3 * u, cy),
+         (cx, cy - 3 * u * ar)], closed=True, facecolor=F_BLUE,
+        edgecolor=BLUE, linewidth=0.8, zorder=2))
+    grid = [(i, j) for i in range(-3, 4) for j in range(-3, 4)
+            if abs(i) + abs(j) <= 3]
+    ax.plot([cx + u * i for i, j in grid], [cy + u * ar * j for i, j in grid],
+            "o", ms=1.4, color=GRAY, zorder=3)
+    ax.plot([cx - 1.15 * u, cx + 2.15 * u],
+            [cy + 2.15 * u * ar, cy - 1.15 * u * ar], "-", color=ORANGE,
+            lw=0.9, zorder=4)
+    fiber = [(-1, 2), (0, 1), (1, 0), (2, -1)]
+    ax.plot([cx + u * i for i, j in fiber], [cy + u * ar * j for i, j in fiber],
+            "o", ms=3.0, color=ORANGE, zorder=5)
 
-    arrow(ax, (52, 87.5), (52, 79))
-    arrow(ax, (52, 67.5), (52, 59))
-    arrow(ax, (45, 47.5), (28, 37.5))
-    arrow(ax, (59, 47.5), (76, 37.5))
-    arrow(ax, (30, 22.5), (42, 13))
-    arrow(ax, (74, 22.5), (62, 13))
+    # (b) the atomic exposure of one transfer
+    cx, cy, u = cells[1], 83.0, 2.15
+    ax.add_patch(Rectangle((cx - 3.6 * u, cy - 0.55 * u * ar), 7.2 * u,
+                           1.1 * u * ar, facecolor=F_BLUE, edgecolor="none",
+                           zorder=2))
+    ax.plot([cx - 6.2 * u, cx + 6.2 * u], [cy, cy], "-", color=LIGHT, lw=0.7,
+            zorder=3)
+    ax.plot([cx + u * k for k in (-3, -1, 1, 3)], [cy] * 4, "o", ms=2.0,
+            color=GRAY, zorder=4)
+    arrow(ax, (cx - 5 * u, cy), (cx - 3.25 * u, cy), color=GRAY, lw=0.8, ms=4)
+    arrow(ax, (cx + 3.15 * u, cy), (cx + 4.9 * u, cy), color=ORANGE, lw=0.8,
+          ms=4)
+    ax.plot([cx - 5 * u], [cy], "o", ms=3.2, color=GRAY, zorder=5)
+    ax.plot([cx + 5 * u], [cy], "o", ms=3.2, color=ORANGE, zorder=5)
+    ax.text(cx - 4.1 * u, cy + 1.15 * u * ar, r"$\varepsilon=0$", fontsize=7,
+            color=GRAY, ha="center", va="bottom")
+    ax.text(cx + 4.1 * u, cy + 1.15 * u * ar, r"$\varepsilon=1$", fontsize=7,
+            color=ORANGE, ha="center", va="bottom")
 
-    ax.text(-3.5, 73, r"universal", fontsize=7, color=GRAY, rotation=90,
-            ha="center", va="center")
-    ax.text(-3.5, 20, r"body-specific", fontsize=7, color=GRAY,
-            rotation=90, ha="center", va="center")
+    # (c) the order it generates on a shell
+    cx, cy, u = cells[2], 83.0, 6.6
+    nodes = {"t": (0, 1.55), "l": (-1, 0), "r": (1, 0), "b": (0, -1.55)}
+    place = {k: (cx + u * x, cy + 0.52 * u * ar * y)
+             for k, (x, y) in nodes.items()}
+    for a, b in (("t", "l"), ("t", "r"), ("l", "b"), ("r", "b")):
+        arrow(ax, place[a], place[b], color=LIGHT, lw=0.7, ms=4)
+    ax.plot(*place["t"], "o", ms=4.2, color=ORANGE, zorder=5)
+    ax.plot(*place["b"], "o", ms=4.2, color=BLUE, zorder=5)
+    for k in ("l", "r"):
+        ax.plot(*place[k], "o", ms=3.4, color=GRAY, zorder=5)
+
+    labels = ("centered exchange fiber",
+              r"atomic exposure $\varepsilon\in\{0,1\}$",
+              "fixed-shell Schur order")
+    for cx, text in zip(cells, labels):
+        ax.text(cx, 66.5, text, fontsize=7.5, ha="center", va="center")
+
+    arrow(ax, (50, 61.5), (50, 51), lw=0.9, ms=6)
+
+    bodies = (
+        (cells[0], 8.8, "diamond", F_ORANGE, ORANGE, "Lee balls",
+         r"$\lfloor s/2\rfloor-1$ minimizing arcs"),
+        (cells[1], 8.4, "octagon", F_PURPLE, "#6a5a8c",
+         r"$C_d+bB_\infty^d$",
+         r"sharp $\kappa_b^{(d)}(s)$, threshold $\Theta_{d,b}(s)$"),
+        (cells[2], 7.7, "square", F_GREEN, "#4a7a44", "cubes",
+         "one minimizing arc"),
+    )
+    for cx, r, kind, fc, ec, head, tail in bodies:
+        _body_shape(ax, cx, 34, r, r * ar, kind, fc, ec)
+        ax.text(cx, 11.5, head, fontsize=8, ha="center", va="center")
+        ax.text(cx, 4, tail, fontsize=7, ha="center", va="center",
+                color=GRAY)
+    arrow(ax, (40, 34), (27, 34), color=GRAY, lw=0.8, ms=5)
+    arrow(ax, (60, 34), (73, 34), color=GRAY, lw=0.8, ms=5)
+    ax.text(33.5, 38, r"$b=0$", fontsize=7, color=GRAY, ha="center",
+            va="bottom")
+    ax.text(66.5, 38, r"$b\to\infty$", fontsize=7, color=GRAY, ha="center",
+            va="bottom")
+
+    ax.text(2.5, 98.5, "universal mechanism", fontsize=7, color=GRAY,
+            ha="left", va="center")
+    ax.text(2.5, 54, "body-specific quantitative layer", fontsize=7,
+            color=GRAY, ha="left", va="center")
     save(fig, path, full=True)
 
 
