@@ -1,4 +1,4 @@
-"""Reproduce the focused manuscript package and all archived result tables."""
+"""Reproduce the manuscript package and all archived result tables."""
 
 from __future__ import annotations
 
@@ -29,6 +29,27 @@ def quick(env: dict[str, str]) -> None:
     run(module("pytest", "-q", "-p", "no:cacheprovider"), env=env)
 
 
+def restore_article_locators(document: str) -> None:
+    """Put back the letters of an article number that the bst discards.
+
+    ``do.pages`` in ``sn-mathphys-num.bst`` keeps only the digits of a page
+    field, so an electronic locator such as ``e70583`` is typeset as
+    ``70583``.  Each such field is matched against the bibliography by its
+    digits and restored.
+    """
+    bbl = PAPER / f"{document}.bbl"
+    if not bbl.exists():
+        return
+    text = original = bbl.read_text(encoding="utf-8")
+    for database in sorted(PAPER.glob("*.bib")):
+        source = database.read_text(encoding="utf-8")
+        for locator in re.findall(r"pages\s*=\s*\{([A-Za-z]+\d+)\}", source):
+            digits = locator.lstrip("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+            text = text.replace(f"\\bfpage{{{digits}}}", f"\\bfpage{{{locator}}}")
+    if text != original:
+        bbl.write_text(text, encoding="utf-8")
+
+
 def latex(document: str, env: dict[str, str]) -> None:
     """Compile one document and fail if its bibliography did not resolve.
 
@@ -48,6 +69,7 @@ def latex(document: str, env: dict[str, str]) -> None:
     if r"\bibdata" not in aux.read_text(encoding="utf-8", errors="ignore"):
         pdflatex()
     run(["bibtex", document], cwd=PAPER, env=env)
+    restore_article_locators(document)
     pdflatex()
     pdflatex()
     log = (PAPER / f"{document}.log").read_text(encoding="utf-8", errors="ignore")
@@ -120,11 +142,11 @@ def full(env: dict[str, str]) -> None:
             cwd=PAPER,
             env=env,
         )
-    for document in ("focus", "online_resource_crypto"):
+    for document in ("covariogram-balancing", "online_resource_crypto"):
         latex(document, env)
     delivery = PAPER / "submission_figures"
-    # Keys are in the order the figures are declared in focus.tex, which is the
-    # order LaTeX numbers them.
+    # Keys are in the order the figures are declared in the manuscript, which is
+    # the order LaTeX numbers them.
     main_figures = [
         "fig-architecture",
         "fig-exchange-fiber",

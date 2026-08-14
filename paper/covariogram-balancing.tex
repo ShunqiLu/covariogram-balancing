@@ -1,13 +1,15 @@
 % Springer Nature journal-article template, version 3.1 (December 2024).
 \documentclass[pdflatex,sn-mathphys-num]{sn-jnl}
 
-% Standalone focused-submission source.  The secondary full-version
-% branches have been removed from this distributable file.
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{booktabs,longtable,array,tabularx,graphicx}
 \usepackage{microtype}
 \usepackage{enumitem}
 \usepackage{placeins}
+
+% Float placement: allow a slightly larger bottom float so that a figure can
+% stay on the page of the statement it illustrates.
+\renewcommand{\bottomfraction}{0.5}
 
 \theoremstyle{thmstyleone}
 \newtheorem{theorem}{Theorem}[section]
@@ -892,6 +894,16 @@ $\epsilon$ at or above $\ell$ is $\ell+\rho_\epsilon(\ell)$, and hence
 Thus the parameter space is cut by finitely many affine endpoint and parity
 walls.  The next theorem evaluates the increment of a balancing step.
 
+\begin{figure}[tbp]
+\centering
+\includegraphics{fig-square-map}
+\caption{The diamond-to-square map.  $T(x,y)=(x+y,x-y)$ is a bijection of
+$\Z^2$ onto $\Lambda=\{(r,w)\in\Z^2:r\equiv w\pmod2\}$, not onto $\Z^2$: the
+crosses in (b) are the integer points it misses.  Discs and squares mark the
+channels $r$ even and $r$ odd, which the map keeps separate.}
+\label{fig:square-map}
+\end{figure}
+
 \begin{theorem}[Exact two-coordinate balancing calculus]
 \label{thm:transfer-calculus}
 For $p,q,a,b\in\Z_{\ge0}$ with $a\ge b+2$, put
@@ -939,18 +951,6 @@ $\Lambda=\{(r,w)\in\Z^2:r\equiv w\pmod2\}$, and
 \]
 The radius-two example in Fig.~\ref{fig:square-map} displays the bijection
 and the two interlaced parity classes directly.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics{fig-square-map}
-\caption{The diamond-to-square map.  The transformation
-$T(x,y)=(x+y,x-y)$ sends the integer points of $B_1^2(2)$ to the points of
-$[-2,2]^2$ lying in
-$\Lambda=\{(r,w)\in\mathbb Z^2:r\equiv w\pmod2\}$.  Filled and open circles
-distinguish the even--even and odd--odd channels, which the map keeps
-separate.}
-\label{fig:square-map}
-\end{figure}
 
 Writing $R=a+b$ and $D=a-b$, the second norm is
 \[
@@ -1454,6 +1454,17 @@ nonnegative integer solutions of $\ell_1+\cdots+\ell_{e(q)}\le K$ number
 $\binom{K+e(q)}{e(q)}$.
 \end{proof}
 
+\begin{figure}[b]
+\centering
+\includegraphics{fig-middle-section}
+\caption{The incidence bound of Lemma~\ref{lem:face-incidence} for $h=2$ and
+$w=(3,1)$, so $c=4$ and $a=2$.  A facet misses $\Lambda_2$ exactly when the
+coordinate it freezes is too heavy, here $q_1=0$ and $q_1=3$; the other two
+meet it, matching $2^1\binom{h-1}1=2$.  Neither vertex meets the layer,
+matching $2^2\binom{h-1}2=0$.}
+\label{fig:middle-section}
+\end{figure}
+
 \begin{lemma}[Face--layer incidence bound]
 \label{lem:face-incidence}
 Let $w_1,\ldots,w_h>0$ be integers with sum $c$.  Encode each
@@ -1515,18 +1526,6 @@ face--layer incidences at least
 \]
 remain.
 \end{proof}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics{fig-middle-section}
-\caption{The incidence bound of Lemma~\ref{lem:face-incidence} in its
-smallest nontrivial instance, $h=2$ and $w=(3,1)$, so $c=4$ and $a=2$.  A
-facet is missed exactly when the coordinate it freezes is too heavy, here
-the two facets $q_1=0$ and $q_1=3$; the remaining two meet $\Lambda_2$,
-which matches the bound $2^1\binom{h-1}1=2$.  Neither vertex meets the
-layer, again matching $2^2\binom{h-1}2=0$.}
-\label{fig:middle-section}
-\end{figure}
 
 \begin{lemma}[Incidence-to-count conversion]
 \label{lem:incidence-count}
@@ -2551,7 +2550,11 @@ Panel~(a) plots the Lee constant $\kappa_{3,5,s}$ of
 Theorem~\ref{thm:sharp-kappa} against the cube constant
 $\kappa^\square_{3,5,s}$ of~\eqref{eq:cube-kappa} on a logarithmic scale:
 the cube decays linearly and stays active one shell longer, while the Lee
-constant drops steeply off the two innermost shells.  Panel~(b) plots the
+constant drops steeply off the two innermost shells.  The labelled markers
+are the last active shells; beyond them both constants vanish.  In $d=3$ the
+two branches of~\eqref{eq:kappa-closed} agree on the common value $2t-s+1$
+for $s\ge4$, so the even--odd split is visible only from $d\ge4$ on.
+Panel~(b) plots the
 tent of~\eqref{eq:capped-tent} for $c=4$, with the two linear branches
 meeting at the plateau $2c-1$ carried by $t=c$ and $t=c+1$.}
 \label{fig:sharp-constants}
@@ -3080,12 +3083,13 @@ with a sharp constant.
 \centering
 \includegraphics{fig-threshold}
 \caption{The competition of Theorem~\ref{thm:structural}.  In (a) the two
-candidate arcs of~\eqref{eq:structural-two-candidates}, drawn as donor,
-recipient, and residual coordinates with the transferred unit shaded; the
+candidate arcs of~\eqref{eq:structural-two-candidates} as donor, recipient,
+and residual coordinates, with bar heights schematic: the shaded unit is the
+one transferred and the dashed outline is where it lands.  The
 recipient-zero arc buys a larger residual and pays the facet surcharge.  In
-(b) the threshold~\eqref{eq:threshold} against the dimension for three pairs
-$(b,s)$: it decreases with slope $-2$, and the marked integer zeros
-$d=13,24,31$ are the smallest ties, where both arcs are minimizing.}
+(b) the threshold~\eqref{eq:threshold} at every integer dimension for three
+pairs $(b,s)$: it decreases with slope $-2$, so each pair has a single zero,
+at which both arcs are minimizing.}
 \label{fig:threshold}
 \end{figure}
 
@@ -3271,26 +3275,22 @@ Resource~1 and used nowhere here.
 \section{Conclusion}
 
 For every pair of finite centered exchange-fiber sets, one coordinate
-balancing move decomposes exactly into parity-fiber endpoint exposures,
-each equal to zero or one; convex hyperoctahedral lattice sections
-automatically have these fibers.  It yields a fiberwise equality certificate
-along the fixed-shell transfer graph and, for equal Lee balls with $d\ge3$,
-the closed sharp constant on every active shell, all minimizing arcs for
-$4\le s\le2t$, and the distance-one rigidity of the extremizers on interior
-shells.
-Cubes factor into interval overlaps, with a product-form
-constant.  Section~\ref{sec:structural} locates
-all three behaviours inside one mechanism: for $C_d+bB_\infty^d$, an arc with
-positive recipient weighs its gap minus one times the self-overlap of the same
-body two dimensions down, while an arc into a zero coordinate pays a surcharge
-from the two capped layers of the cube summand.  The sharp constant is
-therefore determined by lower-dimensional lattice-point counts, with an
-explicit facet surcharge
-for transfers into a zero coordinate, and which arc realizes it is decided by
-the sign of $\Theta_{d,b}(s)$.  Cubes have no surcharge and Lee balls no
-factorization, which is why their sharp layers have one and
-$\lfloor s/2\rfloor-1$ minimizing arcs: the sign is a matter of symmetry, the
-sharp scale and the extremizing geometry are not.
+balancing move decomposes exactly into parity-fiber endpoint exposures, each
+zero or one; convex hyperoctahedral lattice sections have such fibers.  This
+gives a fiberwise equality certificate along the fixed-shell transfer graph
+and, for equal Lee balls with $d\ge3$, the closed sharp constant on every
+active shell, all minimizing arcs for $4\le s\le2t$, and distance-one rigidity
+of the extremizers on interior shells.  Cubes factor into interval overlaps,
+with a product-form constant.  Section~\ref{sec:structural} places all three
+behaviours in one mechanism: for $C_d+bB_\infty^d$ an arc with positive
+recipient weighs its gap minus one times the self-overlap of the same body two
+dimensions down, while an arc into a zero coordinate pays a surcharge from the
+two capped layers of the cube summand.  The sharp constant is therefore
+determined by lower-dimensional lattice-point counts with an explicit facet
+surcharge, and the sign of $\Theta_{d,b}(s)$ decides which arc realizes it.
+Cubes have no surcharge and Lee balls no factorization, which is why their
+sharp layers have one and $\lfloor s/2\rfloor-1$ minimizing arcs: the sign is a
+matter of symmetry, the sharp scale and the extremizing geometry are not.
 
 Three problems remain open.  First, the centered exchange-fiber property is
 sufficient for the transfer sign but not shown to be necessary; a
@@ -3683,6 +3683,6 @@ in \texttt{results/performance\_environment.json}.
 
 \end{appendices}
 
-\bibliography{focus}
+\bibliography{covariogram-balancing}
 
 \end{document}

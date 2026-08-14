@@ -10,6 +10,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 PAPER = ROOT / "paper"
 DRAWIO = PAPER / "drawio"
+MAIN = "covariogram-balancing.tex"
 
 # \textwidth of sn-jnl.cls in the used class options, in PostScript points.
 TEXTWIDTH_PT = 5.147 * 72.0
@@ -30,11 +31,11 @@ def test_every_main_figure_is_produced_by_the_generator_script() -> None:
     driver = script.split("__main__", 1)[1]
     called = re.findall(r"^    (fig_\w+)\(\)$", driver, flags=re.MULTILINE)
     assert set(called) == set(defaults)
-    assert {Path(defaults[name]).stem for name in called} == figures_of("focus.tex")
+    assert {Path(defaults[name]).stem for name in called} == figures_of(MAIN)
 
 
 def test_delivery_export_order_matches_the_manuscript_numbering() -> None:
-    source = (PAPER / "focus.tex").read_text(encoding="utf-8")
+    source = (PAPER / MAIN).read_text(encoding="utf-8")
     declared = [Path(name).stem for name in INCLUDE.findall(source)]
     driver = (ROOT / "scripts" / "reproduce.py").read_text(encoding="utf-8")
     exported = re.findall(
@@ -52,7 +53,7 @@ def test_delivery_export_order_matches_the_manuscript_numbering() -> None:
 
 def test_every_included_figure_exists_and_fits_the_text_block() -> None:
     pypdf = pytest.importorskip("pypdf")
-    stems = figures_of("focus.tex") | figures_of("online_resource_crypto.tex")
+    stems = figures_of(MAIN) | figures_of("online_resource_crypto.tex")
     for stem in sorted(stems):
         path = PAPER / f"{stem}.pdf"
         assert path.is_file()
@@ -63,10 +64,19 @@ def test_every_included_figure_exists_and_fits_the_text_block() -> None:
         assert 0 < float(box.height) <= 8.0 * 72.0
 
 
+def test_main_figures_share_one_printed_width() -> None:
+    pypdf = pytest.importorskip("pypdf")
+    widths = {}
+    for stem in sorted(figures_of(MAIN)):
+        page = pypdf.PdfReader(str(PAPER / f"{stem}.pdf")).pages[0]
+        widths[stem] = float(page.mediabox.width)
+    assert max(widths.values()) - min(widths.values()) <= 3.0, widths
+
+
 def test_every_figure_is_labelled_and_referenced() -> None:
-    source = (PAPER / "focus.tex").read_text(encoding="utf-8")
+    source = (PAPER / MAIN).read_text(encoding="utf-8")
     blocks = re.findall(r"\\begin\{figure\}(.*?)\\end\{figure\}", source, flags=re.S)
-    assert len(blocks) == len(figures_of("focus.tex"))
+    assert len(blocks) == len(figures_of(MAIN))
     for block in blocks:
         labels = re.findall(r"\\label\{(fig:[^}]+)\}", block)
         assert len(labels) == 1

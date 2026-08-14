@@ -10,11 +10,11 @@ No finite computation enters a proof.
 
 ## Contents
 
-- `paper/focus.tex`, `paper/focus.bib`, `paper/focus.pdf`: the manuscript, its
+- `paper/covariogram-balancing.tex`, `.bib`, `.pdf`: the manuscript, its
   cited-only bibliography, and the compiled paper (59 pages).
 - `paper/online_resource_crypto.tex` and `.pdf`: Online Resource 1, the
   probabilistic, QROM, and public-rank material separated from the main
-  narrative (7 pages).
+  narrative (8 pages).
 - `paper/makefigs.py` and `paper/figdata.py`: the generator for every main-text
   figure and the exact computations behind the numbers it draws. Text is
   typeset by pdflatex through the matplotlib pgf backend, so the figures carry
@@ -23,7 +23,7 @@ No finite computation enters a proof.
   `paper/fig-retry-qrom.tex` and `paper/drawio/*.drawio` are the TikZ and
   editable diagrams.net sources of the Online Resource figure.
 - `src/ehrhart_fswa/`: the research and certificate code.
-- `tests/`: the verification suite (478 automated tests).
+- `tests/`: the verification suite (479 automated tests).
 - `results/`: the archived tables, reports, environment metadata, and the
   SHA-256 manifest.
 - `research/*.py`: standalone exact scans, including
@@ -32,7 +32,7 @@ No finite computation enters a proof.
   setting.
 - `research/*.md`: proof-development records for the universal exchange-fiber
   theorem and the non-Lee sharp models, the verification matrix, and provenance
-  notes for the external inputs; the finished proofs are in `paper/focus.tex`.
+  notes for the external inputs; the finished proofs are in the manuscript.
 - `research/sources/`: the retrieved NIST potential-updates workbook and ACVP
   ML-DSA key-generation vectors used by the audits.
 - `scripts/reproduce.py`, `scripts/reproduce.ps1`, `scripts/reproduce.sh`:

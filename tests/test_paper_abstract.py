@@ -10,7 +10,7 @@ PAPER = Path(__file__).resolve().parents[1] / "paper"
 
 
 def abstract_words() -> list[str]:
-    source = (PAPER / "focus.tex").read_text(encoding="utf-8")
+    source = (PAPER / "covariogram-balancing.tex").read_text(encoding="utf-8")
     body = source.split(r"\abstract{", 1)[1].split(r"\keywords", 1)[0]
     body = re.sub(r"\$[^$]*\$", " MATH ", body)  # one inline formula, one word
     body = re.sub(r"\\[a-zA-Z]+|[${}\\]", " ", body).replace("---", " ")

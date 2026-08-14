@@ -4,10 +4,10 @@ Environment: Python 3.13.5, Windows-11-10.0.26200-SP0 (build 26200), executable 
 
 | operation | parameters | seconds | peak MiB | result fingerprint |
 |---|---|---:|---:|---|
-| cross-overlap bivariate DP | `d=4,t=40,u=(6,0,0,0)` | 0.013211 | 0.057 | `digits=7,mod2^64=1321641` |
-| truncated-l1 count | `d=32,B=608,L=floor(608*sqrt(32))` | 0.290798 | 0.687 | `digits=88,mod2^64=2794106642062884865` |
-| generic rational H-enumeration | `rational octagon,d=2,t=80,u=(1,0)` | 1.566573 | 0.086 | `digits=5,mod2^64=22480` |
-| rank/unrank round trips | `64 deterministic ranks,d=16,B=16,L=64` | 0.297024 | 0.071 | `digits=21,mod2^64=17419879899224605695` |
+| cross-overlap bivariate DP | `d=4,t=40,u=(6,0,0,0)` | 0.008543 | 0.053 | `digits=7,mod2^64=1321641` |
+| truncated-l1 count | `d=32,B=608,L=floor(608*sqrt(32))` | 0.302539 | 0.687 | `digits=88,mod2^64=2794106642062884865` |
+| generic rational H-enumeration | `rational octagon,d=2,t=80,u=(1,0)` | 1.489233 | 0.086 | `digits=5,mod2^64=22480` |
+| rank/unrank round trips | `64 deterministic ranks,d=16,B=16,L=64` | 0.322802 | 0.071 | `digits=21,mod2^64=17419879899224605695` |
 
 ## Complexity model
 
