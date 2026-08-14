@@ -281,16 +281,29 @@ def fig_exchange_fiber(path="fig-exchange-fiber.pdf"):
 # ----------------------------------------------------------------- fig 3
 def fig_atomic_exposure(path="fig-atomic-exposure.pdf"):
     cases = [
-        (3, 3, 4, r"(a) new endpoint in, old out", 1),
-        (7, 3, 2, r"(b) both endpoints inside", 0),
-        (1, 1, 6, r"(c) both endpoints outside", 0),
+        (3, 3, 4, r"(a)", 1),
+        (7, 3, 2, r"(b)", 0),
+        (1, 1, 6, r"(c)", 0),
     ]
-    fig = plt.figure(figsize=(1.05 * TW, 3.75))
-    gs = fig.add_gridspec(4, 3, width_ratios=[0.64, 1.0, 0.15],
-                          height_ratios=[1, 1, 1, 0.86],
+    fig = plt.figure(figsize=(1.05 * TW, 3.90))
+    gs = fig.add_gridspec(5, 3, width_ratios=[0.46, 1.0, 0.24],
+                          height_ratios=[0.34, 1, 1, 1, 0.62],
                           hspace=0.30, wspace=0.04)
+
+    axk = fig.add_subplot(gs[0, 1])
+    blank_axes(axk, (-8.4, 8.4), (-1.0, 1.0))
+    for x, col, txt in ((-8.2, BLUE, r"$I_\alpha$"),
+                        (-5.2, GRAY, r"$I_\beta-D$"),
+                        (1.4, ORANGE, r"$I_\beta-(D-2)$")):
+        axk.plot([x], [0], "o", ms=3.6, color=col, zorder=3)
+        axk.text(x + 0.45, 0, txt, fontsize=8.0, color=col, ha="left",
+                 va="center")
+    arrow(axk, (-1.1, 0), (0.9, 0), color=GRAY, lw=0.7, ms=5)
+    axk.text(-0.1, 0.30, r"$+2$", fontsize=7.6, color=GRAY, ha="center",
+             va="bottom")
+
     yb, ya = 1.30, -1.30
-    for row, (alpha, beta, D, tag, eps) in enumerate(cases):
+    for row, (alpha, beta, D, tag, eps) in enumerate(cases, start=1):
         Ia = list(range(-alpha, alpha + 1, 2))
         before = [k - D for k in range(-beta, beta + 1, 2)]
         after = [k + 2 for k in before]
@@ -299,10 +312,8 @@ def fig_atomic_exposure(path="fig-atomic-exposure.pdf"):
 
         axl = fig.add_subplot(gs[row, 0])
         blank_axes(axl, (0, 1), (-2.05, 2.25))
-        axl.text(0.0, 1.20, tag, fontsize=8.0, ha="left", va="center")
-        axl.text(0.0, 0.10, rf"$\alpha={alpha}$, $\beta={beta}$, $D={D}$",
-                 fontsize=7.8, ha="left", va="center", color=GRAY)
-        axl.text(0.0, -1.00, rf"coincidences ${len(hit_b)}\to{len(hit_a)}$",
+        axl.text(0.0, 0.62, tag, fontsize=8.0, ha="left", va="center")
+        axl.text(0.0, -0.52, rf"$\alpha={alpha}$, $\beta={beta}$, $D={D}$",
                  fontsize=7.8, ha="left", va="center", color=GRAY)
 
         ax = fig.add_subplot(gs[row, 1])
@@ -342,14 +353,16 @@ def fig_atomic_exposure(path="fig-atomic-exposure.pdf"):
 
         axr = fig.add_subplot(gs[row, 2])
         blank_axes(axr, (0, 1), (-2.05, 2.25))
-        axr.text(0.5, 0.0, rf"$\varepsilon={eps}$", fontsize=8.0,
+        axr.text(0.42, 0.62, rf"${len(hit_b)}\to{len(hit_a)}$", fontsize=7.8,
+                 ha="center", va="center", color=GRAY)
+        axr.text(0.42, -0.62, rf"$\varepsilon={eps}$", fontsize=8.0,
                  ha="center", va="center",
                  bbox=dict(boxstyle="round,pad=0.22", fc="white",
                            ec="black", lw=0.5))
 
-    ax = fig.add_subplot(gs[3, :])
-    blank_axes(ax, (-19.0, 13.0), (-2.55, 1.15))
-    y, x0, t1, t2, x1 = 0.50, -7.6, -2.0, 4.6, 10.8
+    ax = fig.add_subplot(gs[4, :])
+    blank_axes(ax, (-19.0, 13.0), (-1.30, 1.30))
+    y, x0, t1, t2, x1 = 0.30, -7.6, -2.0, 4.6, 10.8
     ax.add_patch(Rectangle((t1, y - 0.17), t2 - t1, 0.34, facecolor=F_BLUE,
                            edgecolor="none", zorder=1))
     ax.plot([x0, x1], [y, y], "-", color="black", lw=0.7, zorder=2)
@@ -366,21 +379,7 @@ def fig_atomic_exposure(path="fig-atomic-exposure.pdf"):
                    ((t2 + x1) / 2, r"(b)\quad$\varepsilon=0$")):
         ax.text(x, y - 0.44, txt, fontsize=7.8, ha="center", va="top")
     ax.text(x1 + 1.0, y, r"$\alpha$", fontsize=8.0, ha="left", va="center")
-    ax.text(-18.9, y, r"$\beta$ and $D$ fixed:", fontsize=7.9, ha="left",
-            va="center")
-    for x, col, txt in ((-13.0, BLUE, r"$I_\alpha$"),
-                        (-7.4, GRAY, r"$I_\beta-D$"),
-                        (1.6, ORANGE, r"$I_\beta-(D-2)$")):
-        ax.plot([x], [-1.45], "o", ms=3.6, color=col, zorder=3)
-        ax.text(x + 0.60, -1.45, txt, fontsize=8.0, color=col, ha="left",
-                va="center")
-    arrow(ax, (-2.6, -1.45), (1.0, -1.45), color=GRAY, lw=0.7, ms=5)
-    ax.text(-0.8, -1.22, r"$+2$", fontsize=8.0, color=GRAY, ha="center",
-            va="bottom")
-    ax.text(-18.9, -2.25,
-            r"open markers lie outside the window $|x|\le\alpha$; "
-            r"dashed links are the coincidences counted",
-            fontsize=7.1, ha="left", va="center", color=GRAY)
+    ax.text(-18.9, y, r"(d)", fontsize=8.0, ha="left", va="center")
     save(fig, path)
 
 
