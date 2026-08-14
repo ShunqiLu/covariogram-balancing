@@ -281,54 +281,99 @@ def fig_exchange_fiber(path="fig-exchange-fiber.pdf"):
 # ----------------------------------------------------------------- fig 3
 def fig_atomic_exposure(path="fig-atomic-exposure.pdf"):
     cases = [
-        (3, 3, 4, r"(a) exposed", 1),
-        (7, 3, 2, r"(b) absorbed", 0),
-        (1, 1, 6, r"(c) disjoint", 0),
+        (3, 3, 4, r"(a) new endpoint in, old one out", 1,
+         r"$|\beta-D+2|\le\alpha<\beta+D$"),
+        (7, 3, 2, r"(b) both endpoints inside", 0,
+         r"$\beta+D\le\alpha$"),
+        (1, 1, 6, r"(c) both endpoints outside", 0,
+         r"$\alpha<|\beta-D+2|$"),
     ]
-    fig, axes = plt.subplots(3, 1, figsize=(1.16 * TW, 2.55),
-                             gridspec_kw=dict(hspace=0.20))
-    for ax, (alpha, beta, D, tag, eps) in zip(axes, cases):
-        blank_axes(ax, (-11.9, 11.7), (-0.50, 2.55))
+    fig = plt.figure(figsize=(1.22 * TW, 3.30))
+    gs = fig.add_gridspec(4, 2, width_ratios=[0.42, 1.0],
+                          height_ratios=[1, 1, 1, 1.05],
+                          hspace=0.24, wspace=0.02)
+    for row, (alpha, beta, D, tag, eps, rule) in enumerate(cases):
+        axl = fig.add_subplot(gs[row, 0])
+        blank_axes(axl, (0, 1), (-0.72, 2.68))
+        axl.text(0.0, 2.05, tag, fontsize=7.5, ha="left", va="center")
+        axl.text(0.0, 1.05, rf"$\alpha={alpha}$, $\beta={beta}$, $D={D}$",
+                 fontsize=7, ha="left", va="center", color=GRAY)
+        axl.text(0.0, 0.10, rf"overlap "
+                 rf"${len(set(range(-alpha, alpha + 1, 2)) & {k - D for k in range(-beta, beta + 1, 2)})}"
+                 rf"\to"
+                 rf"{len(set(range(-alpha, alpha + 1, 2)) & {k - D + 2 for k in range(-beta, beta + 1, 2)})}$",
+                 fontsize=7, ha="left", va="center", color=GRAY)
+        ax = fig.add_subplot(gs[row, 1])
+        blank_axes(ax, (-8.8, 13.6), (-0.72, 2.68))
         Ia = list(range(-alpha, alpha + 1, 2))
         before = [k - D for k in range(-beta, beta + 1, 2)]
         after = [k + 2 for k in before]
-        lo, hi = -alpha - 0.45, alpha + 0.45
+        lo, hi = -alpha - 0.55, alpha + 0.55
+        ax.add_patch(Rectangle((lo, -0.50), hi - lo, 2.80,
+                               facecolor="#eaf1f9", edgecolor="none",
+                               zorder=0))
         for x in (lo, hi):
-            ax.plot([x, x], [-0.30, 2.30], ":", color="#9fb8d4", lw=0.6,
-                    zorder=0)
-        ax.add_patch(Rectangle((lo, 1.83), hi - lo, 0.34,
-                               facecolor=F_BLUE, edgecolor=BLUE, lw=0.6,
-                               zorder=1))
-        ax.plot(Ia, [2.0] * len(Ia), "o", ms=3.4, color=BLUE, zorder=3)
-        for y, pts, col in ((1.0, before, GRAY), (0.0, after, ORANGE)):
+            ax.plot([x, x], [-0.50, 2.30], ":", color="#9fb8d4", lw=0.6,
+                    zorder=1)
+        ax.text(lo, 2.44, r"$-\alpha$", fontsize=6.9, color=BLUE,
+                ha="center", va="center")
+        ax.text(hi, 2.44, r"$\alpha$", fontsize=6.9, color=BLUE,
+                ha="center", va="center")
+        ax.plot(Ia, [2.05] * len(Ia), "o", ms=3.4, color=BLUE, zorder=3)
+        for k in before:
+            arrow(ax, (k + 0.26, 0.90), (k + 1.74, 0.25), color="#c3c3c3",
+                  lw=0.5, ms=3.4)
+        for y, pts, col in ((1.05, before, GRAY), (0.10, after, ORANGE)):
             inside = [k for k in pts if lo < k < hi]
             outside = [k for k in pts if not lo < k < hi]
             ax.plot(inside, [y] * len(inside), "o", ms=3.6, color=col,
                     zorder=3)
             ax.plot(outside, [y] * len(outside), "o", ms=3.6, mfc="white",
-                    mec=LIGHT, mew=0.7, zorder=3)
-        if after:
-            arrow(ax, (max(before), 0.72), (max(after), 0.28),
-                  color=LIGHT, lw=0.7, ms=5)
-            ax.text(max(after) + 0.65, 0.42, r"$+2$", fontsize=6.5,
-                    color=GRAY, ha="left", va="center")
-        nb = len(set(Ia) & set(before))
-        na = len(set(Ia) & set(after))
-        ax.text(-11.7, 2.0, tag, fontsize=7.5, ha="left", va="center")
-        ax.text(-11.7, 0.5, rf"overlap ${nb}\to{na}$", fontsize=7,
-                ha="left", va="center", color=GRAY)
-        ax.text(11.5, 1.0, rf"$\varepsilon={eps}$", fontsize=7.5,
+                    mec=col, mew=0.8, zorder=3)
+        ax.text(max(after) + 0.62, 0.58, r"$+2$", fontsize=6.9,
+                color=GRAY, ha="left", va="center")
+        ax.text(min(before), 1.54, r"$-\beta-D$", fontsize=6.9, color=GRAY,
+                ha="center", va="center")
+        ax.text(max(after), -0.42, r"$\beta-D+2$", fontsize=6.9,
+                color=ORANGE, ha="center", va="center")
+        ax.text(13.5, 1.62, rf"$\varepsilon={eps}$", fontsize=7.5,
                 ha="right", va="center",
                 bbox=dict(boxstyle="round,pad=0.20", fc="white",
                           ec="black", lw=0.5))
-    legend = [(0.30, BLUE, r"$\bullet$ \ $I_\alpha$"),
-              (0.53, GRAY, r"$\bullet$ \ $I_\beta-D$"),
-              (0.80, ORANGE, r"$\bullet$ \ $I_\beta-(D-2)$")]
-    for x, col, txt in legend:
-        fig.text(x, 0.012, txt, fontsize=7.5, ha="center", va="top",
-                 color=col)
-    fig.text(0.53, -0.045, r"hollow markers lie outside $I_\alpha$",
-             fontsize=6.8, ha="center", va="top", color=GRAY)
+        ax.text(13.5, 0.42, rule, fontsize=6.9, color=GRAY, ha="right",
+                va="center")
+
+    ax = fig.add_subplot(gs[3, :])
+    blank_axes(ax, (-18.2, 13.6), (-2.30, 1.05))
+    y, x0, t1, t2, x1 = 0.45, -7.6, -2.0, 4.6, 10.8
+    ax.add_patch(Rectangle((t1, y - 0.16), t2 - t1, 0.32, facecolor=F_BLUE,
+                           edgecolor="none", zorder=1))
+    ax.plot([x0, x1], [y, y], "-", color="black", lw=0.7, zorder=2)
+    arrow(ax, (x1, y), (x1 + 0.55, y), lw=0.7, ms=5)
+    for t in (t1, t2):
+        ax.plot([t, t], [y - 0.28, y + 0.28], "-", color=BLUE, lw=0.8,
+                zorder=3)
+    ax.text(t1, y + 0.38, r"$|\beta-D+2|$", fontsize=7.1, ha="center",
+            va="bottom")
+    ax.text(t2, y + 0.38, r"$\beta+D$", fontsize=7.1, ha="center",
+            va="bottom")
+    for x, txt in (((x0 + t1) / 2, r"(c)\quad$\varepsilon=0$"),
+                   ((t1 + t2) / 2, r"(a)\quad$\varepsilon=1$"),
+                   ((t2 + x1) / 2, r"(b)\quad$\varepsilon=0$")):
+        ax.text(x, y - 0.40, txt, fontsize=7.1, ha="center", va="top")
+    ax.text(x1 + 1.0, y, r"$\alpha$", fontsize=7.5, ha="left", va="center")
+    ax.text(-18.1, y, r"$\beta$ and $D$ fixed:", fontsize=7, ha="left",
+            va="center")
+    for x, col, txt in ((-6.6, BLUE, r"$I_\alpha$"),
+                        (-0.4, GRAY, r"$I_\beta-D$"),
+                        (6.2, ORANGE, r"$I_\beta-(D-2)$")):
+        ax.plot([x], [-1.30], "o", ms=3.6, color=col, zorder=3)
+        ax.text(x + 0.55, -1.30, txt, fontsize=7.5, color=col, ha="left",
+                va="center")
+    ax.text(-0.4, -2.05,
+            r"filled markers lie in the window $|x|\le\alpha$; "
+            r"open markers of the same colour lie outside it",
+            fontsize=7.1, ha="center", va="center", color=GRAY)
     save(fig, path)
 
 

@@ -577,6 +577,23 @@ content lies in the fiberwise assembly and its quantitative
 consequences.  Figure~\ref{fig:atomic-exposure} shows its
 three regimes.
 
+\begin{figure}[tbp]
+\centering
+\includegraphics{fig-atomic-exposure}
+\caption{The three regimes of Lemma~\ref{lem:atomic-exposure}, each drawn with
+its own $(\alpha,\beta,D)$.  Translating the whole interval $I_\beta-D$ by two
+deletes its left endpoint $-\beta-D$ and appends the right endpoint
+$\beta-D+2$, so the overlap with $I_\alpha$ can grow by at most one point.  It
+grows when the new endpoint lies in the window $|x|\le\alpha$ while the deleted
+one did not~(a), and is unchanged when both lie inside~(b) or both
+outside~(c); the fourth combination cannot occur because
+$|\beta-D+2|\le\beta+D$.  The bottom line is the partition of the
+$\alpha$-axis at fixed $\beta$ and $D$ that these three regimes
+produce, which is the
+criterion~\eqref{eq:atomic-exposure-criterion}.}
+\label{fig:atomic-exposure}
+\end{figure}
+
 \begin{lemma}[Atomic parity-interval exposure]
 \label{lem:atomic-exposure}
 Let
@@ -616,18 +633,6 @@ indicator in~\eqref{eq:atomic-exposure-criterion}.  The parity-compatibility
 hypothesis ensures that every endpoint displayed is in the common parity
 coset.
 \end{proof}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics{fig-atomic-exposure}
-\caption{The three regimes of Lemma~\ref{lem:atomic-exposure}.  Moving the
-parity interval $I_\beta-D$ two steps toward $I_\alpha$ removes its left
-endpoint and adds a new right endpoint, so the overlap can grow by at most
-one point.  It grows by exactly one when the new endpoint enters
-$I_\alpha$ while the old one was already outside~(a); it is unchanged when
-$I_\alpha$ contains both~(b) or neither~(c).}
-\label{fig:atomic-exposure}
-\end{figure}
 
 Summing this exposure over the fibers gives the transfer identity.
 
