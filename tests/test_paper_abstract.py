@@ -1,4 +1,9 @@
-"""The abstract has to stay inside the journal's 150-250 word window."""
+"""The abstract has to stay inside the journal's 150-250 word window.
+
+The upper bound below is deliberately 240 rather than 250, so that a later
+edit cannot push the abstract over the journal limit without failing here
+first.
+"""
 
 from __future__ import annotations
 
@@ -18,4 +23,4 @@ def abstract_words() -> list[str]:
 
 
 def test_abstract_length() -> None:
-    assert 150 <= len(abstract_words()) <= 250
+    assert 150 <= len(abstract_words()) <= 240
