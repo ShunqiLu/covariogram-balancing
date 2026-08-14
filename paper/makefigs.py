@@ -384,53 +384,63 @@ def fig_atomic_exposure(path="fig-atomic-exposure.pdf"):
 
 
 # ----------------------------------------------------------------- fig 4
-def fig_transfer(path="fig-transfer.pdf"):
-    fig, axes = plt.subplots(1, 2, figsize=(0.99 * TW, 1.98),
-                             gridspec_kw=dict(width_ratios=[1.0, 0.95],
-                                              wspace=0.42))
-    ax = axes[0]
-    ax.set_xlim(-0.5, 4.7)
-    ax.set_ylim(-0.5, 4.9)
-    ax.set_aspect("equal")
-    ax.spines[["top", "right"]].set_visible(False)
-    ax.set_xticks(range(5))
-    ax.set_yticks(range(5))
-    ax.tick_params(labelsize=6.5, length=2, pad=1.5)
-    ax.plot([0, 4.5], [0, 4.5], ":", color=LIGHT, lw=0.7)
-    ax.text(2.35, 4.55, r"$u_1=u_2$", fontsize=6.5, color=GRAY,
-            ha="right", va="center")
-    shell = [(4, 0), (3, 1), (2, 2), (1, 3), (0, 4)]
-    ax.plot([p[0] for p in shell], [p[1] for p in shell], "-",
-            color=LIGHT, lw=0.7, zorder=1)
-    ax.plot([p[0] for p in shell], [p[1] for p in shell], "o", ms=3.2,
-            color=GRAY, zorder=2)
-    ax.plot([3, 2], [1, 2], "o", ms=4.2, color=BLUE, zorder=3)
-    arrow(ax, (2.86, 1.14), (2.16, 1.84), color=BLUE, lw=1.0, ms=7)
-    ax.text(3.25, 0.55, r"$(3,1)$", fontsize=7, color=BLUE, ha="center")
-    ax.text(1.30, 2.20, r"$(2,2)$", fontsize=7, color=BLUE, ha="center")
-    ax.set_xlabel(r"$u_1$", fontsize=7.5, labelpad=0.5)
-    ax.set_ylabel(r"$u_2$", fontsize=7.5, labelpad=0.5)
-    ax.set_title(r"(a) one shell $u_1+u_2=4$", fontsize=8, pad=3)
+def _clip_halfplane(poly, a, b, c):
+    """Keep the part of the convex polygon with a*x + b*y <= c."""
+    out, n = [], len(poly)
+    for i in range(n):
+        p, q = poly[i], poly[(i + 1) % n]
+        fp = a * p[0] + b * p[1] - c
+        fq = a * q[0] + b * q[1] - c
+        if fp <= 1e-12:
+            out.append(p)
+        if (fp < -1e-12 < fq) or (fq < -1e-12 < fp):
+            t = fp / (fp - fq)
+            out.append((p[0] + t * (q[0] - p[0]), p[1] + t * (q[1] - p[1])))
+    return out
 
-    ax = axes[1]
-    blank_axes(ax, (-0.1, 5.4), (-0.95, 4.5))
-    for x, h in [(0.3, 3), (1.2, 1), (3.4, 2), (4.3, 2)]:
-        ax.add_patch(Rectangle((x, 0), 0.62, h, facecolor=F_BLUE,
-                               edgecolor=BLUE, lw=0.8))
-    ax.add_patch(Rectangle((0.3, 2), 0.62, 1, facecolor=F_ORANGE,
-                           edgecolor=ORANGE, lw=0.8, zorder=3))
-    ax.add_patch(Rectangle((4.3, 1), 0.62, 1, facecolor=F_ORANGE,
-                           edgecolor=ORANGE, lw=0.8, zorder=3))
-    ax.plot([0.1, 2.0], [0, 0], "-", color="black", lw=0.7)
-    ax.plot([3.2, 5.1], [0, 0], "-", color="black", lw=0.7)
-    arrow(ax, (0.95, 3.25), (4.3, 2.3), color=ORANGE, lw=0.9, rad=-0.30,
-          ms=7)
-    ax.text(2.6, 4.05, r"one unit", fontsize=7, color=ORANGE, ha="center")
-    ax.text(1.05, -0.32, r"$\lambda=(3,1)$", fontsize=7.5, ha="center",
-            va="top")
-    ax.text(4.15, -0.32, r"$\mu=(2,2)$", fontsize=7.5, ha="center",
-            va="top")
-    ax.set_title(r"(b) the same move as a transfer", fontsize=8, pad=3)
+
+def fig_transfer(path="fig-transfer.pdf"):
+    r = 2
+    lattice = [(i, j) for i in range(-r, r + 1) for j in range(-r, r + 1)
+               if abs(i) + abs(j) <= r]
+    cases = [((2, 0), r"(a)\quad$u=2e_1$"), ((1, 1), r"(b)\quad$u=e_1+e_2$")]
+
+    fig = plt.figure(figsize=(1.02 * TW, 2.60))
+    gs = fig.add_gridspec(1, 3, width_ratios=[1.0, 0.30, 1.0], wspace=0.05)
+    for col, (u, tag) in zip((0, 2), cases):
+        ax = fig.add_subplot(gs[0, col])
+        blank_axes(ax, (-4.7, 2.7), (-3.95, 2.85), equal=True)
+        cx, cy = -u[0], -u[1]
+        dia_a = [(r, 0), (0, r), (-r, 0), (0, -r)]
+        dia_b = [(cx + r, cy), (cx, cy + r), (cx - r, cy), (cx, cy - r)]
+        lens = dia_a
+        for s1 in (1, -1):
+            for s2 in (1, -1):
+                lens = _clip_halfplane(lens, s1, s2,
+                                       r + s1 * cx + s2 * cy)
+        ax.add_patch(plt.Polygon(dia_a, closed=True, facecolor=F_BLUE,
+                                 edgecolor=BLUE, lw=0.9, zorder=1))
+        ax.add_patch(plt.Polygon(dia_b, closed=True, facecolor=F_ORANGE,
+                                 edgecolor=ORANGE, lw=0.9, alpha=0.85,
+                                 zorder=2))
+        ax.add_patch(plt.Polygon(lens, closed=True, facecolor="#b4c8de",
+                                 edgecolor="none", zorder=3))
+        shifted = [(i + cx, j + cy) for i, j in lattice]
+        common = sorted(set(lattice) & set(shifted))
+        rest = sorted((set(lattice) | set(shifted)) - set(common))
+        ax.plot([p[0] for p in rest], [p[1] for p in rest], "o", ms=2.6,
+                mfc="white", mec="#9a9a9a", mew=0.6, zorder=4)
+        ax.plot([p[0] for p in common], [p[1] for p in common], "o", ms=3.8,
+                color=BLUE, zorder=5)
+        ax.text(-1.0, -3.66, tag, fontsize=8.0, ha="center", va="center")
+        ax.text(-1.0, 2.58, rf"${len(common)}$ common points", fontsize=7.8,
+                color=BLUE, ha="center", va="center")
+
+    axm = fig.add_subplot(gs[0, 1])
+    blank_axes(axm, (0, 1), (0, 1))
+    arrow(axm, (0.06, 0.52), (0.94, 0.52), color=GRAY, lw=0.8, ms=6)
+    axm.text(0.5, 0.60, r"$-e_1+e_2$", fontsize=7.8, color=GRAY,
+             ha="center", va="bottom")
     save(fig, path)
 
 

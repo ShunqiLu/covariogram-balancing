@@ -828,6 +828,17 @@ Its lattice count is
  =\sum_{j=0}^{\min(d,t)}2^j\binom dj\binom tj.
  \label{eq:crosscount}
 \end{equation}
+\begin{figure}[tbp]
+\centering
+\includegraphics{fig-transfer}
+\caption{A unit balancing transfer and what it does to the lens.  Both shifts
+lie on the shell $\|u\|_1=2$ and differ by one unit moved from the larger
+coordinate to the smaller one.  In each panel the blue diamond is $B_1^2(2)$,
+the orange one is $B_1^2(2)-u$, and the filled points are the lattice points
+they share; the count rises from five to eight.}
+\label{fig:transfer}
+\end{figure}
+
 An exact all-scale rational enumerator for the equal-radius lens---a
 closed bivariate generating function together with a binomial extraction
 formula---is stated and proved as Theorem~\ref{thm:crossgf} in
@@ -841,7 +852,8 @@ special cases is worth recording here:
  |B_1^2(2)\cap(B_1^2(2)-e_1-e_2)|=8,
 \]
 so two shifts of the same Lee weight can have different lattice lenses, and
-scalar Lee distance does not determine the overlap.
+scalar Lee distance does not determine the overlap.  The two shifts are
+drawn in Figure~\ref{fig:transfer}.
 
 \subsection{Exact balancing calculus}
 
@@ -857,18 +869,9 @@ coordinate-concentrated as $\mu$.  For radii $p,q\in\Z_{\ge0}$, define the unequ
  J_{p,q}^{(d)}(u)=\left|\left\{x\in\Z^d:
  \|x\|_1\le p,\ \|x+u\|_1\le q\right\}\right|.
 \]
-Figure~\ref{fig:transfer} shows the elementary move underlying the
-order: one unit passes from the larger coordinate to the smaller coordinate
-while their sum remains fixed.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics{fig-transfer}
-\caption{A unit balancing transfer in translation-composition space.  The
-shifts $u=(3,1)$ and $u'=(2,2)$ lie on the same shell $u_1+u_2=4$, and the
-move sends one unit from the larger coordinate to the smaller one.}
-\label{fig:transfer}
-\end{figure}
+The elementary move underlying the order sends one unit from the larger
+coordinate to the smaller one while their sum stays fixed; it is the move
+relating the two shifts of Figure~\ref{fig:transfer}.
 
 For $p,q\in\Z_{\ge0}$, $c\in\Z$, and $\epsilon\in\{0,1\}$, let
 \begin{equation}
