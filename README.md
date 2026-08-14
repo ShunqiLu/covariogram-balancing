@@ -14,7 +14,7 @@ No finite computation enters a proof.
   cited-only bibliography, and the compiled paper (59 pages).
 - `paper/online_resource_crypto.tex` and `.pdf`: Online Resource 1, the
   probabilistic, QROM, and public-rank material separated from the main
-  narrative (8 pages).
+  narrative (9 pages).
 - `paper/makefigs.py` and `paper/figdata.py`: the generator for every main-text
   figure and the exact computations behind the numbers it draws. Text is
   typeset by pdflatex through the matplotlib pgf backend, so the figures carry
